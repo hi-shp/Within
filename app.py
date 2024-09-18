@@ -5,10 +5,15 @@ import os
 app = Flask(__name__)
 
 # 환경 변수에서 MongoDB URI 가져오기
-# .env 파일 또는 Heroku 환경 변수 설정을 통해 관리 가능
-app.config["MONGO_URI"] = os.getenv('MONGO_URI', 'mongodb+srv://hishp:<db_password>@within.uwscqyk.mongodb.net/mydatabase?retryWrites=true&w=majority')
+# 비밀번호를 "hishp"로 설정
+app.config["MONGO_URI"] = os.getenv('MONGO_URI', 'mongodb+srv://hishp:hishp@within.uwscqyk.mongodb.net/mydatabase?retryWrites=true&w=majority')
 
 mongo = PyMongo(app)
+
+# 기본 루트 (/) 추가
+@app.route('/')
+def index():
+    return "Hello, this is the root endpoint. The app is running!"
 
 # 인스타그램 ID를 저장하는 API
 @app.route('/save_instagram_id', methods=['POST'])
