@@ -4,10 +4,8 @@ import os
 
 app = Flask(__name__)
 
-# 환경 변수에서 MongoDB URI 가져오기
-# 비밀번호를 "hishp"로 설정
+# MongoDB URI 설정
 app.config["MONGO_URI"] = os.getenv('MONGO_URI', 'mongodb+srv://hishp:hishp@within.uwscqyk.mongodb.net/mydatabase?retryWrites=true&w=majority')
-
 mongo = PyMongo(app)
 
 # 기본 루트 (/) 추가
@@ -32,6 +30,22 @@ def save_instagram_id():
     })
 
     return jsonify({"message": "IDs saved successfully!"}), 200
+
+# MongoDB 연결 테스트용 경로 추가
+@app.route('/check_connection', methods=['GET'])
+def check_connection():
+    try:
+        # MongoDB에 테스트 데이터 삽입
+        mongo.db.test_connection.insert_one({'status': 'connected'})
+        # 데이터베이스에서 데이터를 조회하여 연결 상태 확인
+        connection_status = mongo.db.test_connection.find_one({'status': 'connected'})
+
+        if connection_status:
+            return jsonify({"message": "MongoDB is connected and working!"}), 200
+        else:
+            return jsonify({"error": "MongoDB connection failed."}), 500
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 if __name__ == '__main__':
     app.run(debug=True)
