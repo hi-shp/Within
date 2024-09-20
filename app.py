@@ -5,7 +5,7 @@ import os
 app = Flask(__name__)
 
 # 환경 변수에서 MongoDB URI 가져오기
-app.config["MONGO_URI"] = os.getenv('MONGO_URI', 'mongodb+srv://me:hishp@within.uwscqyk.mongodb.net/mydatabase?retryWrites=true&w=majority')
+app.config["MONGO_URI"] = os.getenv('MONGO_URI')
 
 mongo = PyMongo(app)
 
