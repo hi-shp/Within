@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template
 from flask_pymongo import PyMongo
 import os
 
@@ -12,7 +12,7 @@ mongo = PyMongo(app)
 # 기본 루트 추가 (앱 동작 확인용)
 @app.route('/')
 def index():
-    return "Hello, this is the root endpoint. The app is running!"
+    return render_template('index.html')
 
 # 인스타그램 ID를 저장하는 API
 @app.route('/save_instagram_id', methods=['POST'])
