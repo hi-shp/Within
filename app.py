@@ -24,6 +24,15 @@ def save_instagram_id():
     if not user_instagram_id or not target_instagram_id:
         return jsonify({"error": "Instagram ID is required"}), 400
 
+    # 중복 확인
+    existing_entry = mongo.db.instagram_ids.find_one({
+        'user_instagram_id': user_instagram_id,
+        'target_instagram_id': target_instagram_id
+    })
+
+    if existing_entry:
+        return jsonify({"error": "This Instagram ID pair already exists."}), 409
+
     # MongoDB에 데이터 저장
     mongo.db.instagram_ids.insert_one({
         'user_instagram_id': user_instagram_id,
