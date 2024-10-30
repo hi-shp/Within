@@ -1,4 +1,3 @@
-/* 기본 리셋 스타일 */
 * {
     margin: 0;
     padding: 0;
@@ -6,7 +5,6 @@
     font-family: Arial, sans-serif;
 }
 
-/* 본문 스타일 */
 body {
     display: flex;
     align-items: center;
@@ -15,7 +13,6 @@ body {
     background-color: #f0f2f5;
 }
 
-/* 메인 컨테이너 */
 .container {
     text-align: center;
     background-color: #ffffff;
@@ -25,20 +22,17 @@ body {
     width: 300px;
 }
 
-/* 헤딩 스타일 */
 h1 {
     font-size: 2em;
     margin-bottom: 20px;
     color: #333333;
 }
 
-/* 라벨 스타일 */
 label {
     font-size: 1em;
     color: #555555;
 }
 
-/* 인풋 스타일 */
 input[type="text"] {
     width: 100%;
     padding: 10px;
@@ -48,7 +42,6 @@ input[type="text"] {
     font-size: 1em;
 }
 
-/* 버튼 스타일 */
 button {
     width: 100%;
     padding: 10px;
@@ -65,102 +58,8 @@ button:hover {
     background-color: #0056b3;
 }
 
-/* 메시지 스타일 */
 #message {
     margin-top: 20px;
     font-size: 0.9em;
     color: #ff3333;
-}
-
-/* 광고 스타일 */
-.ad-container {
-    text-align: center;
-    margin: 10px 0;
-}
-
-/* 데스크탑용 양쪽 광고 */
-.left-side-ad, .right-side-ad {
-    position: fixed;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 120px;
-    display: none;
-}
-
-/* 왼쪽 광고 */
-.left-side-ad {
-    left: 0;
-}
-
-/* 오른쪽 광고 */
-.right-side-ad {
-    right: 0;
-}
-
-/* 모바일 및 데스크탑 광고 위치 조정 */
-.top-ad, .bottom-ad {
-    display: block;
-    margin: 10px 0;
-}
-
-/* 데스크탑 화면일 경우 */
-@media (min-width: 1024px) {
-    .left-side-ad, .right-side-ad {
-        display: block; /* 데스크탑일 때 양쪽 광고 표시 */
-    }
-
-    .top-ad, .bottom-ad {
-        display: none; /* 데스크탑에서는 상단/하단 광고 숨김 */
-    }
-}
-
-/* 모바일 화면일 경우 */
-@media (max-width: 1023px) {
-    .left-side-ad, .right-side-ad {
-        display: none; /* 모바일일 때 양쪽 광고 숨김 */
-    }
-
-    .top-ad, .bottom-ad {
-        display: block; /* 모바일일 때 상단/하단 광고 표시 */
-    }
-}
-
-/* 팝업 스타일 */
-.popup {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    z-index: 1000;
-}
-
-.popup-content {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: #fff;
-    padding: 20px;
-    width: 300px;
-    border-radius: 8px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-    text-align: center;
-}
-
-.close-btn {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    font-size: 20px;
-    cursor: pointer;
-    color: #333;
-}
-
-#popupMessage {
-    font-size: 16px;
-    color: #333;
-    margin-top: 10px;
 }
