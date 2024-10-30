@@ -4,22 +4,24 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>With_in</title>
+    <title>Withinstar</title>
     <link rel="icon" href="{{ url_for('static', filename='images/logo1.png') }}" type="image/png">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
-    <h1>With_in</h1>
-    <form id="instagramForm">
-        <label for="userInstagramID">나의 Instagram ID:</label>
-        <input type="text" id="userInstagramID" name="userInstagramID" required><br><br>
+    <div class="container">
+        <h1>Withinstar</h1>
+        <form id="instagramForm">
+            <label for="userInstagramID">나의 Instagram ID:</label>
+            <input type="text" id="userInstagramID" name="userInstagramID" required>
 
-        <label for="targetInstagramID">상대방 Instagram ID:</label>
-        <input type="text" id="targetInstagramID" name="targetInstagramID" required><br><br>
+            <label for="targetInstagramID">상대방 Instagram ID:</label>
+            <input type="text" id="targetInstagramID" name="targetInstagramID" required>
 
-        <button type="submit">등록하기</button>
-    </form>
-
-    <p id="message"></p>
+            <button type="submit">등록하기</button>
+        </form>
+        <p id="message"></p>
+    </div>
 
     <script>
         document.getElementById('instagramForm').addEventListener('submit', async function (event) {
