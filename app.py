@@ -42,10 +42,7 @@ def save_instagram_id():
 @app.route('/ads.txt')@app.route('/ads.txt')
 def ads_txt():
     content = "google.com, pub-4209969470096098, DIRECT, f08c47fec0942fa0"
-    return Response(content, mimetype='text/plain')git add .
-git commit -m "."
-git push heroku main
-
+    return Response(content, mimetype='text/plain')
 def ads_txt():
     content = "google.com, pub-4209969470096098, DIRECT, f08c47fec0942fa0"
     return Response(content, mimetype='text/plain')
