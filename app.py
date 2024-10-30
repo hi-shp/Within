@@ -39,10 +39,7 @@ def save_instagram_id():
 
     return jsonify({"message": "Target selected successfully!"}), 200
 
-@app.route('/ads.txt')@app.route('/ads.txt')
-def ads_txt():
-    content = "google.com, pub-4209969470096098, DIRECT, f08c47fec0942fa0"
-    return Response(content, mimetype='text/plain')
+@app.route('/ads.txt')
 def ads_txt():
     content = "google.com, pub-4209969470096098, DIRECT, f08c47fec0942fa0"
     return Response(content, mimetype='text/plain')
