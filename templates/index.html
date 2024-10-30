@@ -5,12 +5,27 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Withinstar</title>
-    <link rel="icon" href="{{ url_for('static', filename='images/logo1.png') }}" type="image/png">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4209969470096098"
+            crossorigin="anonymous"></script>
 </head>
 <body>
     <div class="container">
         <h1>Withinstar</h1>
+
+        <!-- 광고 위치 -->
+        <div class="ad-container">
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-4209969470096098"
+                 data-ad-slot="1234567890"
+                 data-ad-format="auto"></ins>
+            <script>
+                (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+        </div>
+
+        <!-- Instagram ID 등록 폼 -->
         <form id="instagramForm">
             <label for="userInstagramID">나의 Instagram ID:</label>
             <input type="text" id="userInstagramID" name="userInstagramID" required>
@@ -46,6 +61,8 @@
 
                 if (response.ok) {
                     document.getElementById('message').textContent = result.message;
+                } else if (result.error === 'You can only target one person.') {
+                    document.getElementById('message').textContent = '이미 한 명을 지목하셨습니다. 지목 변경은 불가능합니다.';
                 } else {
                     document.getElementById('message').textContent = result.error;
                 }
@@ -54,5 +71,12 @@
             }
         });
     </script>
+
+    <style>
+        .ad-container {
+            margin: 20px 0;
+            text-align: center;
+        }
+    </style>
 </body>
 </html>
