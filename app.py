@@ -37,9 +37,15 @@ def error(error_message, encrypted_id):
 # 인스타그램 ID 저장 API
 @app.route('/save_instagram_id', methods=['POST'])
 def save_instagram_id():
+    # 확인용 로그 추가
+    print("MongoDB 연결 확인: ", mongo)
     data = request.json
     user_instagram_id = data.get('userInstagramID')
     target_instagram_id = data.get('targetInstagramID')
+    
+    # user_instagram_id와 target_instagram_id 값 확인
+    print(f"user_instagram_id: {user_instagram_id}")
+    print(f"target_instagram_id: {target_instagram_id}")
 
     if not user_instagram_id or not target_instagram_id:
         return jsonify({"redirect": url_for('error', error_message="Instagram ID is required", encrypted_id="")}), 400
@@ -60,6 +66,7 @@ def save_instagram_id():
     })
 
     return jsonify({"redirect": url_for('success', message="Target selected successfully!")}), 200
+
 
 # 기존 데이터 삭제 API
 @app.route('/delete_target', methods=['POST'])
