@@ -2,6 +2,8 @@ from flask import Flask, request, jsonify, render_template, redirect, url_for, R
 from flask_pymongo import PyMongo
 import os
 from cryptography.fernet import Fernet
+import smtplib
+from email.mime.text import MIMEText
 
 app = Flask(__name__)
 
@@ -18,6 +20,21 @@ def encrypt_data(data):
 
 def decrypt_data(token):
     return cipher_suite.decrypt(token.encode()).decode()
+
+# 이메일 전송 함수
+def send_email(subject, message):
+    sender_email = "hishphi0917@gmail.com"  # 발신 이메일
+    sender_password = os.getenv("EMAIL_PASSWORD")  # 환경변수에서 비밀번호 가져오기
+    receiver_email = "hishp@pusan.ac.kr"   # 수신 이메일
+
+    msg = MIMEText(message)
+    msg['Subject'] = subject
+    msg['From'] = sender_email
+    msg['To'] = receiver_email
+
+    with smtplib.SMTP_SSL("smtp.gmail.com", 465) as server:
+        server.login(sender_email, sender_password)
+        server.sendmail(sender_email, receiver_email, msg.as_string())
 
 # 기본 루트
 @app.route('/')
@@ -59,6 +76,20 @@ def save_instagram_id():
         'target_instagram_id': target_instagram_id
     })
 
+    # 역방향 매칭 확인
+    reverse_match = mongo.db.instagram_ids.find_one({
+        "user_instagram_id": target_instagram_id,
+        "target_instagram_id": user_instagram_id
+    })
+
+    if reverse_match:
+        # 이메일 전송
+        send_email(
+            subject="매칭 성공 알림",
+            message=f"매칭 성공!\n{user_instagram_id}와 {target_instagram_id}가 매칭되었습니다."
+        )
+        return jsonify({"redirect": url_for('success', message="매칭 성공!")}), 200
+
     return jsonify({"redirect": url_for('success', message="Target selected successfully!")}), 200
 
 # 기존 데이터 삭제 API
@@ -82,7 +113,6 @@ def delete_target():
         return jsonify({"error": "일치하는 데이터를 찾을 수 없습니다."}), 404
 
     return jsonify({"message": "기존 지목이 성공적으로 삭제되었습니다."}), 200
-
 
 @app.route('/ads.txt')
 def ads_txt():
