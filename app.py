@@ -56,11 +56,16 @@ def ads_txt():
 def delete_target():
     user_instagram_id = request.cookies.get('userInstagramID')  # 사용자 ID를 쿠키에서 가져오기
 
+    print(f"Received request to delete target for user ID: {user_instagram_id}")  # 요청 로그
+
     if not user_instagram_id:
+        print("No user ID found in cookies")
         return jsonify({'error': 'User not authenticated'}), 401
 
     # MongoDB에서 해당 사용자의 지목 데이터 삭제
     result = mongo.db.instagram_ids.delete_one({'user_instagram_id': user_instagram_id})
+
+    print(f"Delete result: {result.deleted_count} document(s) deleted")  # 삭제 결과 로그
 
     if result.deleted_count == 0:
         return jsonify({'error': 'No target found to delete'}), 404

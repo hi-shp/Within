@@ -114,27 +114,24 @@
 
     <script>
         document.addEventListener("DOMContentLoaded", function () {
-            const openPopupButton = document.getElementById("openPopup");
-            const popup = document.getElementById("popup");
-            const closePopupButton = document.getElementById("closePopup");
-            const changeTargetButton = document.getElementById("changeTargetButton");
-        
-            // 팝업 열기
-            if (openPopupButton) {
-                openPopupButton.addEventListener("click", function () {
-                    popup.style.display = "flex"; // 팝업 표시
-                });
-            }
-        
-            // 팝업 닫기
-            if (closePopupButton) {
-                closePopupButton.addEventListener("click", function () {
-                    popup.style.display = "none"; // 팝업 숨김
-                });
-            }
-        
-            document.addEventListener("DOMContentLoaded", function () {
+    const openPopupButton = document.getElementById("openPopup");
+    const popup = document.getElementById("popup");
+    const closePopupButton = document.getElementById("closePopup");
     const changeTargetButton = document.getElementById("changeTargetButton");
+
+    // 팝업 열기 (마음 전달하기 버튼 클릭 시 팝업 표시)
+    if (openPopupButton) {
+        openPopupButton.addEventListener("click", function (event) {
+            popup.style.display = "flex"; // 팝업 표시
+        });
+    }
+
+    // 팝업 닫기
+    if (closePopupButton) {
+        closePopupButton.addEventListener("click", function () {
+            popup.style.display = "none"; // 팝업 숨김
+        });
+    }
 
     // 등록한 상대 바꾸기 버튼 클릭 이벤트
     if (changeTargetButton) {
@@ -163,6 +160,6 @@
     }
 });
 
-        </script>        
+</script>        
 </body>
 </html>
