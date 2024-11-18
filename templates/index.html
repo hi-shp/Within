@@ -11,23 +11,101 @@
      crossorigin="anonymous"></script>
 </head>
 <body>
-    <div class="container">
-        <h1>Withinstar</h1>
+    <!-- 헤더 -->
+    <header class="header">
+        <div class="logo-container">
+            <img src="{{ url_for('static', filename='images/logo1.png') }}" alt="Withinstar Logo" class="logo">
+            <span class="site-name">Withinstar.com</span>
+        </div>
+    </header>
+    
+    <!-- 전체 레이아웃 -->
+    <div class="page-container">
+        <!-- 좌측 광고 -->
+        <div class="ad-section ad-left">
+            <div class="adsense">
+                <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4209969470096098"
+                    crossorigin="anonymous"></script>
+                <ins class="adsbygoogle"
+                    style="display:block"
+                    data-ad-client="ca-pub-4209969470096098"
+                    data-ad-slot="1234567890"
+                    data-ad-format="auto"
+                    data-full-width-responsive="true"></ins>
+                <script>
+                    (adsbygoogle = window.adsbygoogle || []).push({});
+                </script>
+            </div>
+        </div>
 
-        <!-- Instagram ID 등록 폼 -->
-        <form id="instagramForm">
-            <label for="userInstagramID">나의 Instagram ID:</label>
-            <input type="text" id="userInstagramID" name="userInstagramID" required>
+        <!-- 메인 콘텐츠 -->
+        <div class="main-content">
+            <!-- 후킹 멘트 -->
+            <div class="hook-section">
+                <h1>“팔로우는 했는데, DM은 어떻게 보낼지 망설이셨나요?”</h1>
+                <p>
+                    혹시나 내가 관심 있다는 사실이 주변에 알려질까 두렵진 않으셨나요?<br>
+                    과에서 소문이라도 날까 걱정되셨다면, 이제는 Withinstar를 이용해 보세요.<br>
+                    관심을 표현하고 싶지만 선뜻 용기 내기 어려운 그 순간, 저희가 도와드립니다.
+                </p>
+            </div>
+            <!-- 서비스 과정 및 입력 폼 -->
+            <div class="intro-section">
+                <h2>서비스 이용 방법</h2>
+                <ol>
+                    <li>나의 Instagram ID와 관심 있는 상대방의 ID를 입력합니다.</li>
+                    <li>입력한 정보는 안전하게 암호화되어 서버에 저장됩니다.</li>
+                    <li>상대방도 동일한 방식으로 관심을 표현할 경우에만 매칭이 성사됩니다.</li>
+                    <li>매칭이 성공하면 Instagram DM을 통해 서로에게 알림이 발송됩니다.</li>
+                </ol>
+            </div>
+            <div class="container">
+                <h2>Instagram ID 등록</h2>
+                <form id="instagramForm">
+                    <label for="userInstagramID">나의 Instagram ID:</label>
+                    <input type="text" id="userInstagramID" name="userInstagramID" required>
 
-            <label for="targetInstagramID">상대방 Instagram ID:</label>
-            <input type="text" id="targetInstagramID" name="targetInstagramID" required>
+                    <label for="targetInstagramID">상대방 Instagram ID:</label>
+                    <input type="text" id="targetInstagramID" name="targetInstagramID" required>
 
-            <button type="submit">등록하기</button>
-        </form>
-        <p id="message"></p>
+                    <button type="submit">등록하기</button>
+                </form>
+                <p id="message"></p>
+            </div>
+        </div>
+
+        <!-- 우측 광고 -->
+        <div class="ad-section ad-right">
+            <div class="adsense">
+                <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4209969470096098"
+                    crossorigin="anonymous"></script>
+                <ins class="adsbygoogle"
+                    style="display:block"
+                    data-ad-client="ca-pub-4209969470096098"
+                    data-ad-slot="1234567890"
+                    data-ad-format="auto"
+                    data-full-width-responsive="true"></ins>
+                <script>
+                    (adsbygoogle = window.adsbygoogle || []).push({});
+                </script>
+            </div>
+        </div>
     </div>
-    <script>
-        document.getElementById('instagramForm').addEventListener('submit', async function (event) {
+</body>
+
+
+<footer class="footer">
+    <div class="footer-content">
+        <p>© 2024 썸데이(Withinstar). All rights reserved.</p>
+        <p>사업자 등록번호: 843-18-02055 | 대표: 박순홍</p>
+        <p>이메일: hishp@pusan.ac.kr | 전화: 010-5278-4017</p>
+        <p>주소: 부산광역시 금정구 부산대학로63번길 (부산대학교 11공학관)</p>
+        <p>본 웹사이트의 모든 콘텐츠는 저작권법에 의해 보호되며, 무단 복제 및 배포를 금합니다.</p>
+    </div>
+</footer>
+
+<script>
+    document.getElementById('instagramForm').addEventListener('submit', async function (event) {
     event.preventDefault();
 
     const userInstagramID = document.getElementById('userInstagramID').value;
@@ -54,8 +132,5 @@
         alert('오류가 발생했습니다. 다시 시도해주세요.');
     }
 });
-
-    </script>
-    
-</body>
+</script>
 </html>

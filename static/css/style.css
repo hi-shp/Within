@@ -1,40 +1,155 @@
-* {
+/* 전체 레이아웃 설정 */
+html, body {
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
-    font-family: Arial, sans-serif;
+    width: 100%;
+    height: 100%;
+    overflow-x: hidden; /* 가로 스크롤 강제 제거 */
+    background-color: #ffffff; /* 흰색 배경 */
+    display: flex;
+    flex-direction: column; /* 세로 레이아웃 */
 }
 
-body {
+/* 페이지 컨테이너 */
+.page-container {
+    display: flex;
+    justify-content: space-between; /* 좌우 광고와 콘텐츠 배치 */
+    align-items: flex-start;
+    flex: 1; /* 콘텐츠 영역 확장 */
+    width: 100%;
+    margin-top: 10px; /* 헤더와 광고 사이 간격 */
+}
+
+/* 광고 영역 */
+.ad-section {
+    width: 15%; /* 좌우 광고 영역 */
+    padding: 10px;
+    background-color: #f8f9fa; /* 연한 배경 */
+    text-align: center;
+    margin-top: 10px; /* 광고 위치를 헤더 아래로 이동 */
+    box-sizing: border-box; /* 패딩 포함 */
+}
+
+.adsense {
+    margin-top: 20px;
+    height: auto;
+    min-height: 100px; /* 광고 최소 높이 */
+}
+
+/* 메인 콘텐츠 */
+.main-content {
+    width: 80%; /* 중앙 80% 영역 */
+    background-color: #fff5f5; /* 연한 핑크 배경 */
+    border-radius: 10px; /* 둥근 모서리 */
+    padding: 20px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* 그림자 효과 */
+    margin: 20px auto 0 auto; /* 중앙 정렬 */
+    box-sizing: border-box; /* 패딩 포함 */
+}
+
+/* 헤더 섹션 */
+.header {
+    width: 100%;
+    background-color: #ffffff; /* 흰색 배경 */
+    padding: 10px; /* 패딩 최적화 */
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); /* 아래 그림자 */
+    display: flex;
+    justify-content: center; /* 가운데 정렬 */
+    position: sticky;
+    top: 0; /* 스크롤 시 고정 */
+    z-index: 10; /* 우선순위 설정 */
+    box-sizing: border-box; /* 패딩 포함 */
+}
+
+.logo-container {
     display: flex;
     align-items: center;
-    justify-content: center;
-    height: 100vh;
-    background-color: #f0f2f5;
 }
 
+.logo {
+    height: 36px; /* 로고 크기 */
+    margin-right: 10px; /* 로고와 텍스트 간 간격 */
+}
+
+.site-name {
+    font-size: 1.2em; /* 사이트 이름 크기 */
+    font-weight: bold;
+    color: #333333; /* 진한 회색 */
+    text-transform: uppercase; /* 대문자 표시 */
+}
+
+/* 후킹 멘트 섹션 */
+.hook-section {
+    text-align: center;
+    background-color: #ffe6e6; /* 연한 핑크 배경 */
+    padding: 20px 30px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    width: 90%;
+    margin: 0 auto 20px auto;
+    box-sizing: border-box; /* 패딩 포함 */
+}
+
+.hook-section h1 {
+    color: #ff6384; /* 진한 핑크 텍스트 */
+    margin-bottom: 10px;
+    font-size: 1.8em;
+}
+
+.hook-section p {
+    color: #333333;
+    margin-bottom: 10px;
+    font-size: 1.1em;
+    line-height: 1.6; /* 줄 간격 */
+}
+
+/* 서비스 과정 설명 섹션 */
+.intro-section {
+    text-align: center;
+    background-color: #ffffff; /* 흰색 배경 */
+    padding: 20px 30px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* 그림자 */
+    margin-bottom: 20px;
+    width: 90%;
+    margin: 0 auto 20px auto;
+    box-sizing: border-box; /* 패딩 포함 */
+}
+
+.intro-section h2 {
+    color: #333333;
+    margin-bottom: 10px;
+    font-size: 1.5em;
+}
+
+.intro-section ol {
+    text-align: left;
+    color: #555555;
+    font-size: 1.1em;
+    margin: 20px auto;
+    line-height: 1.6;
+    padding-left: 20px; /* 왼쪽 여백 */
+}
+
+/* 입력 폼 섹션 */
 .container {
     text-align: center;
-    background-color: #ffffff;
+    background-color: #ffffff; /* 흰색 배경 */
     padding: 30px;
     border-radius: 10px;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-    width: 300px;
+    width: 40%; /* 너비를 화면 크기에 맞게 설정 */
+    margin: 0 auto;
+    box-sizing: border-box; /* 패딩 포함 */
 }
 
-h1 {
-    font-size: 2em;
-    margin-bottom: 20px;
-    color: #333333;
-}
-
-label {
-    font-size: 1em;
-    color: #555555;
+input[type="text"],
+button {
+    width: 100%; /* 부모 요소인 container에 맞추기 */
+    box-sizing: border-box; /* 경계 포함 크기 계산 */
 }
 
 input[type="text"] {
-    width: 100%;
     padding: 10px;
     margin: 10px 0;
     border: 1px solid #cccccc;
@@ -43,9 +158,8 @@ input[type="text"] {
 }
 
 button {
-    width: 100%;
     padding: 10px;
-    background-color: #007bff;
+    background-color: #ff6384; /* 진한 핑크 */
     border: none;
     color: white;
     font-size: 1em;
@@ -55,16 +169,85 @@ button {
 }
 
 button:hover {
-    background-color: #0056b3;
+    background-color: #e55373; /* 어두운 핑크 */
 }
 
-#message {
-    margin-top: 20px;
-    font-size: 0.9em;
-    color: #ff3333;
+@media (max-width: 768px) {
+    .container {
+        width: 90%; /* 작은 화면에서 너비를 늘림 */
+    }
 }
 
-.ad-container {
-    margin: 20px;
+
+/* 푸터 섹션 */
+.footer {
+    width: 100%;
+    background-color: #333333; /* 어두운 배경 */
+    color: #ffffff; /* 밝은 텍스트 */
     text-align: center;
+    padding: 20px 0;
+    margin-top: auto; /* 푸터를 화면 아래로 고정 */
+    font-size: 0.9em;
+    box-sizing: border-box; /* 패딩 포함 */
+}
+
+.footer-content p {
+    margin: 5px 0; /* 문단 간 간격 */
+}
+
+/* 팝업 전체 레이아웃 */
+#popup {
+    display: none; /* 기본적으로 숨김 */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* 반투명 배경 */
+    z-index: 1000; /* 항상 앞쪽에 배치 */
+    display: flex;
+    justify-content: center; /* 수평 가운데 정렬 */
+    align-items: center; /* 수직 가운데 정렬 */
+}
+
+/* 팝업 콘텐츠 박스 */
+.popup-content {
+    background-color: #ffffff; /* 흰색 배경 */
+    border-radius: 10px; /* 둥근 모서리 */
+    padding: 30px; /* 내부 여백 */
+    width: 90%; /* 작은 화면에서는 거의 전체를 사용 */
+    max-width: 400px; /* 최대 크기 제한 */
+    text-align: center; /* 텍스트 가운데 정렬 */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* 그림자 효과 */
+}
+
+/* 팝업 제목 */
+.popup-content h2 {
+    color: #333333; /* 진한 회색 */
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+}
+
+/* 팝업 내용 */
+.popup-content p {
+    color: #555555; /* 중간 회색 */
+    font-size: 1rem;
+    line-height: 1.6; /* 줄 간격 */
+    margin-bottom: 20px;
+}
+
+/* 닫기 버튼 */
+#closePopup {
+    background-color: #d9534f; /* 빨간색 버튼 */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#closePopup:hover {
+    background-color: #c9302c; /* 더 어두운 빨간색 */
 }
