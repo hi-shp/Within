@@ -207,7 +207,7 @@ button:hover {
     background-color: #333333; /* 어두운 배경 */
     color: #ffffff; /* 밝은 텍스트 */
     text-align: center;
-    padding: 20px 0;
+    padding: 20px 10px;
     margin-top: auto; /* 푸터를 화면 아래로 고정 */
     font-size: 0.9em;
     box-sizing: border-box; /* 패딩 포함 */
@@ -294,3 +294,9 @@ button:hover {
     padding-right: 10px; /* 우측 패딩 */
 }
 
+/* 텍스트 줄바꿈 띄어쓰기 단위로 설정 */
+p, h1, h2, h3, span, div {
+    word-break: keep-all; /* 단어 단위로 끊기 */
+    white-space: normal; /* 기본 줄바꿈 규칙 */
+    overflow-wrap: break-word; /* 긴 단어는 줄바꿈 허용 */
+}
