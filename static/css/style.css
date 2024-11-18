@@ -119,7 +119,7 @@ h1, p {
 
 /* Instagram 아이콘 */
 .icon {
-    height: 36px; /* 로고 크기와 동일 */
+    height: 36px !important; /* 로고 크기와 동일 */
     cursor: pointer;
     transition: transform 0.3s ease; /* 클릭 시 애니메이션 */
 }
