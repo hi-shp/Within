@@ -20,8 +20,6 @@ html, body {
     box-sizing: border-box;
 }
 
-
-
 /* 광고 영역 */
 .ad-section {
     width: 15%; /* 좌우 광고 영역 */
@@ -63,7 +61,7 @@ html, body {
     word-wrap: break-word; /* 단어가 너무 길면 줄바꿈 */
     line-height: 1.2; /* 줄 간격 */
 }
-h1, h2, p {
+h1, p {
     word-wrap: break-word; /* 긴 단어가 줄 바꿈 되도록 설정 */
     font-size: 1em; /* 모바일에서 글씨 크기 줄이기 */
 }
@@ -157,11 +155,14 @@ h1, h2, p {
 .container {
     text-align: center;
     background-color: #ffffff; /* 흰색 배경 */
-    padding: 30px;
+    padding-top: 5px;
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-bottom: 10px;
     border-radius: 10px;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
     width: 40%; /* 너비를 화면 크기에 맞게 설정 */
-    margin: 0 auto;
+    margin: 10px auto;
     box-sizing: border-box; /* 패딩 포함 */
 }
 
@@ -217,6 +218,21 @@ button:hover {
     margin: 5px 0; /* 문단 간 간격 */
 }
 
+.success-title, .error-title {
+    font-size: 3rem; /* 기본 크기 */
+    font-weight: bold; /* 글씨 강조 */
+    text-align: center; /* 중앙 정렬 */
+    color: #ff6384; /* 성공 텍스트 색상 */
+}
+
+@media (max-width: 768px) {
+    .success-title, .error-title {
+        font-size: 1.3rem; /* 모바일에서 크기 키움 */
+        line-height: 1.4; /* 줄 간격 조정 */
+        color: #d9534f; /* 오류 텍스트 색상 */
+    }
+}
+
 /* 팝업 전체 레이아웃 */
 #popup {
     display: none; /* 기본적으로 숨김 */
@@ -236,8 +252,8 @@ button:hover {
 .popup-content {
     background-color: #ffffff; /* 흰색 배경 */
     border-radius: 10px; /* 둥근 모서리 */
-    padding: 30px; /* 내부 여백 */
-    width: 90%; /* 작은 화면에서는 거의 전체를 사용 */
+    padding: 20px; /* 내부 여백 */
+    width: 70%; /* 작은 화면에서는 거의 전체를 사용 */
     max-width: 400px; /* 최대 크기 제한 */
     text-align: center; /* 텍스트 가운데 정렬 */
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* 그림자 효과 */
@@ -272,4 +288,9 @@ button:hover {
 
 #closePopup:hover {
     background-color: #c9302c; /* 더 어두운 빨간색 */
+}
+
+.success-container, .error-container {
+    padding-left: 10px; /* 좌측 패딩 */
+    padding-right: 10px; /* 우측 패딩 */
 }
