@@ -47,12 +47,12 @@
                     </p>
                     <button class="error-button" id="openPopup" style="background-color: #d9534f;">마음 전달하기</button>
                     <hr class="divider" style="border: 1px solid #f5c6cb; margin: 10px 0;">
-                    <p style="color: #555;">
+                    <p style="color: #555; ">
                         혹은, 기존의 등록을 삭제하고 새로운 사람을 선택할 수 있습니다.
                     </p>
-                    <a id="changeTargetButton" href="/" style="text-decoration: none;">
-                        <button style="background-color: #5bc0de;">등록한 상대 바꾸기</button>
-                    </a>                    
+                    <a href="/" style="text-decoration: none;">
+                        <button id="changeTargetButton" style="background-color: #5bc0de;">등록한 상대 바꾸기</button>
+                    </a>
 
                     <hr class="divider" style="border: 1px solid #f5c6cb; margin: 10px 0;">
                     <h2 class="features-title" style="color: #333;">서비스 특징</h2>
@@ -113,60 +113,61 @@
     </footer>
 
     <script>
-    document.addEventListener("DOMContentLoaded", function () {
-    const openPopupButton = document.getElementById("openPopup");
-    const popup = document.getElementById("popup");
-    const closePopupButton = document.getElementById("closePopup");
-    const changeTargetButton = document.getElementById("changeTargetButton");
-
-    // 팝업 열기 (마음 전달하기 버튼 클릭 시 팝업 표시)
-    if (openPopupButton) {
-        openPopupButton.addEventListener("click", function () {
-            popup.style.display = "flex"; // 팝업 표시
-        });
-    }
-
-    // 팝업 닫기
-    if (closePopupButton) {
-        closePopupButton.addEventListener("click", function () {
-            popup.style.display = "none"; // 팝업 숨김
-        });
-    }
-
-    // 등록한 상대 바꾸기 버튼 클릭 이벤트
-    if (changeTargetButton) {
-        changeTargetButton.addEventListener("click", async function (event) {
-            event.preventDefault(); // 기본 동작(링크 이동) 중단
-
-            try {
-                // DELETE 요청으로 서버에 데이터 삭제 요청
-                const response = await fetch('/delete_target', {
-                    method: 'DELETE',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
+        document.addEventListener("DOMContentLoaded", function () {
+            const openPopupButton = document.getElementById("openPopup");
+            const popup = document.getElementById("popup");
+            const closePopupButton = document.getElementById("closePopup");
+            const changeTargetButton = document.getElementById("changeTargetButton");
+        
+            // 팝업 열기
+            if (openPopupButton) {
+                openPopupButton.addEventListener("click", function () {
+                    popup.style.display = "flex"; // 팝업 표시
                 });
-
-                if (response.ok) {
-                    const result = await response.json();
-                    alert(result.message); // 성공 메시지 표시
-                    window.location.href = "/"; // 홈 화면으로 리다이렉션
-                } else if (response.status === 401) {
-                    alert("인증되지 않은 사용자입니다. 다시 로그인해주세요.");
-                    window.location.href = "/error/User not authenticated"; // 오류 페이지로 이동
-                } else if (response.status === 404) {
-                    alert("삭제할 대상이 없습니다.");
-                } else {
-                    alert("오류가 발생했습니다. 다시 시도해주세요.");
-                }
-            } catch (error) {
-                alert("네트워크 오류가 발생했습니다. 다시 시도해주세요.");
-                console.error("Error:", error);
+            }
+        
+            // 팝업 닫기
+            if (closePopupButton) {
+                closePopupButton.addEventListener("click", function () {
+                    popup.style.display = "none"; // 팝업 숨김
+                });
             }
         });
+        // 인스타그램 ID 저장 요청
+fetch('/save_instagram_id', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+        userInstagramID: 'example_user',
+        targetInstagramID: 'example_target'
+    })
+})
+.then(response => response.json())
+.then(data => {
+    if (data.redirect) {
+        window.location.href = data.redirect;
+    } else {
+        alert('Error: ' + data.error);
     }
-});
+})
+.catch(error => console.error('Error:', error));
 
-</script>        
+// 인스타그램 ID 삭제 요청
+fetch('/delete_target', {
+    method: 'DELETE',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ userInstagramID: 'example_user' })
+})
+.then(response => response.json())
+.then(data => {
+    if (data.message) {
+        alert(data.message);
+    } else {
+        alert('Error: ' + data.error);
+    }
+})
+.catch(error => console.error('Error:', error));
+
+        </script>        
 </body>
 </html>
