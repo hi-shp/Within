@@ -268,7 +268,7 @@ button:hover {
 /* 팝업 내용 */
 .popup-content p {
     color: #555555; /* 중간 회색 */
-    font-size: 1rem;
+    font-size: 0.8rem;
     line-height: 1.6; /* 줄 간격 */
     margin-bottom: 20px;
 }
