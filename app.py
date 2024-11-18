@@ -52,5 +52,21 @@ def ads_txt():
     content = "google.com, pub-4209969470096098, DIRECT, f08c47fec0942fa0"
     return Response(content, mimetype='text/plain')
 
+@app.route('/delete_target', methods=['DELETE'])
+def delete_target():
+    user_instagram_id = request.cookies.get('userInstagramID')  # 사용자 ID를 쿠키에서 가져오기
+
+    if not user_instagram_id:
+        return jsonify({'error': 'User not authenticated'}), 401
+
+    # MongoDB에서 해당 사용자의 지목 데이터 삭제
+    result = mongo.db.instagram_ids.delete_one({'user_instagram_id': user_instagram_id})
+
+    if result.deleted_count == 0:
+        return jsonify({'error': 'No target found to delete'}), 404
+
+    return jsonify({'message': 'Target deleted successfully'}), 200
+
+
 if __name__ == '__main__':
     app.run(debug=True)

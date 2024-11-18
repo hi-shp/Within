@@ -46,7 +46,13 @@
                         비밀스럽게 마음을 전하는 <strong>Withinstar</strong>와 함께하세요!
                     </p>
                     <button class="error-button" id="openPopup" style="background-color: #d9534f;">마음 전달하기</button>
-                    <hr class="divider" style="border: 1px solid #f5c6cb; margin: 20px 0;">
+                    <hr class="divider" style="border: 1px solid #f5c6cb; margin: 10px 0;">
+                    <p style="color: #555; ">
+                        혹은, 기존의 등록을 삭제하고 새로운 사람을 선택할 수 있습니다.
+                    </p>
+                    <button id="changeTargetButton" style="background-color: #5bc0de;">다른 인연 찾아가기</button>
+
+                    <hr class="divider" style="border: 1px solid #f5c6cb; margin: 10px 0;">
                     <h2 class="features-title" style="color: #333;">서비스 특징</h2>
                     <ul class="features-list" style="list-style: none; padding: 0; color: #555; font-size: 0.8rem; line-height: 1.8; margin-bottom: 20px;">
                         <li>🔒 암호화 시스템으로 정보가 절대 공개되지 않습니다.</li>
@@ -105,26 +111,48 @@
     </footer>
 
     <script>
-    document.addEventListener("DOMContentLoaded", function () {
-    const openPopupButton = document.getElementById("openPopup");
-    const popup = document.getElementById("popup");
-    const closePopupButton = document.getElementById("closePopup");
-
-    // 팝업 열기
-    if (openPopupButton) {
-        openPopupButton.addEventListener("click", function () {
-            popup.style.display = "flex"; // 팝업 표시
+        document.addEventListener("DOMContentLoaded", function () {
+            const openPopupButton = document.getElementById("openPopup");
+            const popup = document.getElementById("popup");
+            const closePopupButton = document.getElementById("closePopup");
+            const changeTargetButton = document.getElementById("changeTargetButton");
+        
+            // 팝업 열기
+            if (openPopupButton) {
+                openPopupButton.addEventListener("click", function () {
+                    popup.style.display = "flex"; // 팝업 표시
+                });
+            }
+        
+            // 팝업 닫기
+            if (closePopupButton) {
+                closePopupButton.addEventListener("click", function () {
+                    popup.style.display = "none"; // 팝업 숨김
+                });
+            }
+        
+            // 등록한 상대 바꾸기
+            if (changeTargetButton) {
+                changeTargetButton.addEventListener("click", async function () {
+                    try {
+                        const response = await fetch('/delete_target', {
+                            method: 'DELETE',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            }
+                        });
+        
+                        if (response.ok) {
+                            window.location.href = '/'; // 홈 화면으로 리다이렉트
+                        } else {
+                            alert('오류가 발생했습니다. 다시 시도해주세요.');
+                        }
+                    } catch (error) {
+                        alert('오류가 발생했습니다. 다시 시도해주세요.');
+                    }
+                });
+            }
         });
-    }
-
-    // 팝업 닫기
-    if (closePopupButton) {
-        closePopupButton.addEventListener("click", function () {
-            popup.style.display = "none"; // 팝업 숨김
-        });
-    }
-    // 페이지 로드 시 팝업을 강제로 열지 않음
-});
-    </script>
+        </script>        
 </body>
 </html>
