@@ -45,7 +45,7 @@ def save_instagram_id():
         return jsonify({"redirect": url_for('error', error_message="Instagram ID is required", encrypted_id="")}), 400
 
     # 한 명만 지목 가능하도록 기존 지목 확인
-    existing_user = mongo.db.database.instagram_ids.find_one({'user_instagram_id': user_instagram_id})
+    existing_user = mongo.db.instagram_ids.find_one({'user_instagram_id': user_instagram_id})
 
     if existing_user:
         encrypted_id = encrypt_data(user_instagram_id)
