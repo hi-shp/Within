@@ -47,10 +47,12 @@
                     </p>
                     <button class="error-button" id="openPopup" style="background-color: #d9534f;">마음 전달하기</button>
                     <hr class="divider" style="border: 1px solid #f5c6cb; margin: 10px 0;">
-                    <p style="color: #555; ">
+                    <p style="color: #555;">
                         혹은, 기존의 등록을 삭제하고 새로운 사람을 선택할 수 있습니다.
                     </p>
-                    <button id="changeTargetButton" style="background-color: #5bc0de;">다른 인연 찾아가기</button>
+                    <a id="changeTargetButton" href="/" style="text-decoration: none;">
+                        <button style="background-color: #5bc0de;">등록한 상대 바꾸기</button>
+                    </a>                    
 
                     <hr class="divider" style="border: 1px solid #f5c6cb; margin: 10px 0;">
                     <h2 class="features-title" style="color: #333;">서비스 특징</h2>
@@ -131,28 +133,36 @@
                 });
             }
         
-            // 등록한 상대 바꾸기
-            if (changeTargetButton) {
-                changeTargetButton.addEventListener("click", async function () {
-                    try {
-                        const response = await fetch('/delete_target', {
-                            method: 'DELETE',
-                            headers: {
-                                'Content-Type': 'application/json'
-                            }
-                        });
-        
-                        if (response.ok) {
-                            window.location.href = '/'; // 홈 화면으로 리다이렉트
-                        } else {
-                            alert('오류가 발생했습니다. 다시 시도해주세요.');
-                        }
-                    } catch (error) {
-                        alert('오류가 발생했습니다. 다시 시도해주세요.');
+            document.addEventListener("DOMContentLoaded", function () {
+    const changeTargetButton = document.getElementById("changeTargetButton");
+
+    // 등록한 상대 바꾸기 버튼 클릭 이벤트
+    if (changeTargetButton) {
+        changeTargetButton.addEventListener("click", async function (event) {
+            event.preventDefault(); // 기본 동작(링크 이동) 중단
+
+            try {
+                // DELETE 요청으로 데이터베이스에서 데이터 삭제
+                const response = await fetch('/delete_target', {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json'
                     }
                 });
+
+                if (response.ok) {
+                    // 성공 시 href에 따라 홈 화면으로 이동
+                    window.location.href = this.href;
+                } else {
+                    alert('오류가 발생했습니다. 다시 시도해주세요.');
+                }
+            } catch (error) {
+                alert('오류가 발생했습니다. 다시 시도해주세요.');
             }
         });
+    }
+});
+
         </script>        
 </body>
 </html>
