@@ -1,11 +1,14 @@
 from flask import Flask, request, jsonify, render_template, redirect, url_for, Response
 from flask_pymongo import PyMongo
+import jwt
+import datetime
 import os
 
 app = Flask(__name__)
 
-# 환경 변수에서 MongoDB URI 가져오기
+# 환경 변수에서 MongoDB URI 및 JWT 비밀 키 가져오기
 app.config["MONGO_URI"] = os.getenv('MONGO_URI')
+SECRET_KEY = os.getenv('SECRET_KEY', 'your_default_secret_key')  # 환경 변수에서 비밀 키 가져오기
 mongo = PyMongo(app)
 
 # 기본 루트
@@ -45,22 +48,39 @@ def save_instagram_id():
         'target_instagram_id': target_instagram_id
     })
 
-    return jsonify({"redirect": url_for('success', message="Target selected successfully!")}), 200
+    # JWT 생성
+    payload = {
+        'userInstagramID': user_instagram_id,
+        'exp': datetime.datetime.utcnow() + datetime.timedelta(hours=1)  # 만료 시간: 1시간
+    }
+    token = jwt.encode(payload, SECRET_KEY, algorithm='HS256')
 
+    return jsonify({"token": token, "redirect": url_for('success', message="Target selected successfully!")}), 200
+
+# ads.txt 파일 제공
 @app.route('/ads.txt')
 def ads_txt():
     content = "google.com, pub-4209969470096098, DIRECT, f08c47fec0942fa0"
     return Response(content, mimetype='text/plain')
 
+# 인스타그램 ID 삭제 API
 @app.route('/delete_target', methods=['DELETE'])
 def delete_target():
-    user_instagram_id = request.cookies.get('userInstagramID')  # 사용자 ID를 쿠키에서 가져오기
+    token = request.headers.get('Authorization')  # 요청 헤더에서 JWT 가져오기
+
+    if not token:
+        return jsonify({'error': 'Token is missing'}), 401
+
+    try:
+        # JWT 디코딩 및 검증
+        decoded_token = jwt.decode(token, SECRET_KEY, algorithms=['HS256'])
+        user_instagram_id = decoded_token.get('userInstagramID')
+    except jwt.ExpiredSignatureError:
+        return jsonify({'error': 'Token has expired'}), 401
+    except jwt.InvalidTokenError:
+        return jsonify({'error': 'Invalid token'}), 401
 
     print(f"Received request to delete target for user ID: {user_instagram_id}")  # 요청 로그
-
-    if not user_instagram_id:
-        print("No user ID found in cookies")
-        return jsonify({'error': 'User not authenticated'}), 401
 
     # MongoDB에서 해당 사용자의 지목 데이터 삭제
     result = mongo.db.instagram_ids.delete_one({'user_instagram_id': user_instagram_id})
