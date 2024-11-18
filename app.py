@@ -1,12 +1,23 @@
 from flask import Flask, request, jsonify, render_template, redirect, url_for, Response
 from flask_pymongo import PyMongo
 import os
+from cryptography.fernet import Fernet
 
 app = Flask(__name__)
 
-# 환경 변수에서 MongoDB URI 가져오기
+# 환경 변수에서 MongoDB URI 및 암호화 키 가져오기
 app.config["MONGO_URI"] = os.getenv('MONGO_URI')
 mongo = PyMongo(app)
+
+# 암호화/복호화 키 설정
+SECRET_KEY = os.getenv('SECRET_KEY', Fernet.generate_key().decode())
+cipher_suite = Fernet(SECRET_KEY.encode())
+
+def encrypt_data(data):
+    return cipher_suite.encrypt(data.encode()).decode()
+
+def decrypt_data(token):
+    return cipher_suite.decrypt(token.encode()).decode()
 
 # 기본 루트
 @app.route('/')
@@ -19,9 +30,9 @@ def success(message):
     return render_template('success.html', message=message)
 
 # 오류 메시지 페이지
-@app.route('/error/<error_message>')
-def error(error_message):
-    return render_template('error.html', error_message=error_message)
+@app.route('/error/<error_message>/<encrypted_id>')
+def error(error_message, encrypted_id):
+    return render_template('error.html', error_message=error_message, encrypted_id=encrypted_id)
 
 # 인스타그램 ID 저장 API
 @app.route('/save_instagram_id', methods=['POST'])
@@ -31,13 +42,16 @@ def save_instagram_id():
     target_instagram_id = data.get('targetInstagramID')
 
     if not user_instagram_id or not target_instagram_id:
-        return jsonify({"redirect": url_for('error', error_message="Instagram ID is required")}), 400
+        return jsonify({"redirect": url_for('error', error_message="Instagram ID is required", encrypted_id="")}), 400
 
     # 한 명만 지목 가능하도록 기존 지목 확인
     existing_user = mongo.db.instagram_ids.find_one({'user_instagram_id': user_instagram_id})
 
     if existing_user:
-        return jsonify({"redirect": url_for('error', error_message="You can only target one person.")}), 409
+        encrypted_id = encrypt_data(user_instagram_id)
+        return jsonify({
+            "redirect": url_for('error', error_message="You can only target one person.", encrypted_id=encrypted_id)
+        }), 409
 
     # MongoDB에 데이터 저장 (새로운 지목)
     mongo.db.instagram_ids.insert_one({
@@ -46,6 +60,28 @@ def save_instagram_id():
     })
 
     return jsonify({"redirect": url_for('success', message="Target selected successfully!")}), 200
+
+# 기존 데이터 삭제 API
+@app.route('/delete_target', methods=['POST'])
+def delete_target():
+    data = request.json
+    encrypted_id = data.get('encryptedID')
+
+    if not encrypted_id:
+        return jsonify({"error": "Invalid request"}), 400
+
+    try:
+        user_instagram_id = decrypt_data(encrypted_id)
+    except Exception:
+        return jsonify({"error": "Invalid token"}), 400
+
+    # MongoDB에서 데이터 삭제
+    result = mongo.db.instagram_ids.delete_one({'user_instagram_id': user_instagram_id})
+
+    if result.deleted_count == 0:
+        return jsonify({"error": "No matching record found"}), 404
+
+    return jsonify({"message": "Target successfully deleted"}), 200
 
 @app.route('/ads.txt')
 def ads_txt():

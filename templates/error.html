@@ -50,10 +50,8 @@
                     <p style="color: #555; ">
                         혹은, 기존의 등록을 삭제하고 새로운 사람을 선택할 수 있습니다.
                     </p>
-                    <a href="/" style="text-decoration: none;">
-                        <button id="changeTargetButton" style="background-color: #5bc0de;">등록한 상대 바꾸기</button>
-                    </a>
-
+                    <input type="hidden" id="encryptedID" value="{{ encrypted_id }}">
+                    <button id="changeTargetButton" style="background-color: #5bc0de;">등록한 상대 바꾸기</button>
                     <hr class="divider" style="border: 1px solid #f5c6cb; margin: 10px 0;">
                     <h2 class="features-title" style="color: #333;">서비스 특징</h2>
                     <ul class="features-list" style="list-style: none; padding: 0; color: #555; font-size: 0.8rem; line-height: 1.8; margin-bottom: 20px;">
@@ -132,7 +130,35 @@
                     popup.style.display = "none"; // 팝업 숨김
                 });
             }
+
+            // 기존 대상 변경 요청
+            if (changeTargetButton) {
+                changeTargetButton.addEventListener("click", async function () {
+                    const encryptedID = document.getElementById("encryptedID").value;
+
+                    try {
+                        const response = await fetch('/delete_target', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({ encryptedID }),
+                        });
+
+                        const result = await response.json();
+
+                        if (result.message) {
+                            alert(result.message);
+                            window.location.href = '/';
+                        } else {
+                            alert(result.error);
+                        }
+                    } catch (error) {
+                        alert('삭제 요청 중 오류가 발생했습니다. 다시 시도해주세요.');
+                    }
+                });
+            }
         });
-        </script>        
+    </script>        
 </body>
 </html>
