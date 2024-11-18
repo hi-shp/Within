@@ -68,20 +68,21 @@ def delete_target():
     encrypted_id = data.get('encryptedID')
 
     if not encrypted_id:
-        return jsonify({"error": "Invalid request"}), 400
+        return jsonify({"error": "요청이 잘못되었습니다."}), 400
 
     try:
         user_instagram_id = decrypt_data(encrypted_id)
     except Exception:
-        return jsonify({"error": "Invalid token"}), 400
+        return jsonify({"error": "유효하지 않은 토큰입니다."}), 400
 
     # MongoDB에서 데이터 삭제
     result = mongo.db.instagram_ids.delete_one({'user_instagram_id': user_instagram_id})
 
     if result.deleted_count == 0:
-        return jsonify({"error": "No matching record found"}), 404
+        return jsonify({"error": "일치하는 데이터를 찾을 수 없습니다."}), 404
 
-    return jsonify({"message": "Target successfully deleted"}), 200
+    return jsonify({"message": "기존 지목이 성공적으로 삭제되었습니다."}), 200
+
 
 @app.route('/ads.txt')
 def ads_txt():
