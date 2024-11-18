@@ -29,10 +29,10 @@
     <script>
         document.getElementById('instagramForm').addEventListener('submit', async function (event) {
             event.preventDefault();
-
+    
             const userInstagramID = document.getElementById('userInstagramID').value;
             const targetInstagramID = document.getElementById('targetInstagramID').value;
-
+    
             try {
                 const response = await fetch('/save_instagram_id', {
                     method: 'POST',
@@ -44,20 +44,56 @@
                         targetInstagramID: targetInstagramID
                     })
                 });
-
+    
                 const result = await response.json();
-
+    
                 if (response.ok) {
-                    document.getElementById('message').textContent = result.message;
+                    showPopup(result.message, 'success');
                 } else if (result.error === 'You can only target one person.') {
-                    document.getElementById('message').textContent = '이미 한 명을 지목하셨습니다. 지목 변경은 불가능합니다.';
+                    showPopup('이미 한 명을 지목하셨습니다. 지목 변경은 불가능합니다.', 'error');
                 } else {
-                    document.getElementById('message').textContent = result.error;
+                    showPopup(result.error, 'error');
                 }
             } catch (error) {
-                document.getElementById('message').textContent = '오류가 발생했습니다. 다시 시도해주세요.';
+                showPopup('오류가 발생했습니다. 다시 시도해주세요.', 'error');
             }
         });
+    
+        function showPopup(message, type) {
+            const popup = document.createElement('div');
+            popup.style.position = 'fixed';
+            popup.style.top = '50%';
+            popup.style.left = '50%';
+            popup.style.transform = 'translate(-50%, -50%)';
+            popup.style.zIndex = '1000';
+            popup.style.backgroundColor = type === 'success' ? '#4CAF50' : '#F44336';
+            popup.style.color = '#fff';
+            popup.style.padding = '20px';
+            popup.style.borderRadius = '10px';
+            popup.style.boxShadow = '0px 4px 8px rgba(0, 0, 0, 0.2)';
+            popup.style.textAlign = 'center';
+    
+            const popupText = document.createElement('p');
+            popupText.textContent = message;
+            popup.appendChild(popupText);
+    
+            const closeButton = document.createElement('button');
+            closeButton.textContent = '닫기';
+            closeButton.style.marginTop = '10px';
+            closeButton.style.padding = '5px 10px';
+            closeButton.style.border = 'none';
+            closeButton.style.borderRadius = '5px';
+            closeButton.style.backgroundColor = '#fff';
+            closeButton.style.color = type === 'success' ? '#4CAF50' : '#F44336';
+            closeButton.style.cursor = 'pointer';
+            closeButton.addEventListener('click', function () {
+                document.body.removeChild(popup);
+            });
+            popup.appendChild(closeButton);
+    
+            document.body.appendChild(popup);
+        }
     </script>
+    
 </body>
 </html>

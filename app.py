@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify, render_template, Response
+from flask import Flask, request, jsonify, render_template, redirect, url_for, Response
 from flask_pymongo import PyMongo
 import os
 
@@ -8,12 +8,22 @@ app = Flask(__name__)
 app.config["MONGO_URI"] = os.getenv('MONGO_URI')
 mongo = PyMongo(app)
 
-# 기본 루트 추가 (앱 동작 확인용)
+# 기본 루트
 @app.route('/')
 def index():
     return render_template('index.html')
 
-# 인스타그램 ID를 저장하는 API (한 명만 지목 가능하게 수정)
+# 성공 메시지 페이지
+@app.route('/success/<message>')
+def success(message):
+    return render_template('success.html', message=message)
+
+# 오류 메시지 페이지
+@app.route('/error/<error_message>')
+def error(error_message):
+    return render_template('error.html', error_message=error_message)
+
+# 인스타그램 ID 저장 API
 @app.route('/save_instagram_id', methods=['POST'])
 def save_instagram_id():
     data = request.json
@@ -21,15 +31,13 @@ def save_instagram_id():
     target_instagram_id = data.get('targetInstagramID')
 
     if not user_instagram_id or not target_instagram_id:
-        return jsonify({"error": "Instagram ID is required"}), 400
+        return jsonify({"redirect": url_for('error', error_message="Instagram ID is required")}), 400
 
     # 한 명만 지목 가능하도록 기존 지목 확인
-    existing_user = mongo.db.instagram_ids.find_one({
-        'user_instagram_id': user_instagram_id
-    })
+    existing_user = mongo.db.instagram_ids.find_one({'user_instagram_id': user_instagram_id})
 
     if existing_user:
-        return jsonify({"error": "You can only target one person."}), 409
+        return jsonify({"redirect": url_for('error', error_message="You can only target one person.")}), 409
 
     # MongoDB에 데이터 저장 (새로운 지목)
     mongo.db.instagram_ids.insert_one({
@@ -37,7 +45,7 @@ def save_instagram_id():
         'target_instagram_id': target_instagram_id
     })
 
-    return jsonify({"message": "Target selected successfully!"}), 200
+    return jsonify({"redirect": url_for('success', message="Target selected successfully!")}), 200
 
 @app.route('/ads.txt')
 def ads_txt():
