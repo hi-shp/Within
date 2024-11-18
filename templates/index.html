@@ -14,7 +14,8 @@
 <body>
     <!-- 헤더 -->
     <header class="header">
-        <div class="logo-container">
+        <!-- 가운데 로고와 사이트 이름 -->
+        <div class="site-name-container">
             <a href="/" class="logo-link">
                 <img src="{{ url_for('static', filename='images/logo1.png') }}" alt="Withinstar Logo" class="logo">
             </a>
@@ -22,13 +23,16 @@
                 <span class="site-name">Withinstar.com</span>
             </a>
         </div>
+        
+        <!-- 오른쪽 Instagram 아이콘 -->
         <div class="icon-container">
             <a href="https://www.instagram.com/withinstar_official" target="_blank">
-                <img src="{{ url_for('static', filename='images/instagram.png') }}?v=2" alt="Instagram Icon" class="icon" height="36" width="36">
-
+                <img src="{{ url_for('static', filename='images/instagram.png') }}" alt="Instagram Icon" class="icon">
             </a>
         </div>
     </header>
+    
+    
     
     <!-- 전체 레이아웃 -->
     <div class="page-container">

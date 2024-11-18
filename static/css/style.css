@@ -81,16 +81,17 @@ h1, p {
     box-sizing: border-box; /* 패딩 포함 */
 }
 
-/* 로고 컨테이너 */
-.logo-container {
-    display: flex; /* 플렉스 레이아웃 */
+/* 가운데 사이트 이름과 로고 컨테이너 */
+.site-name-container {
+    display: flex; /* 로고와 사이트 이름을 한 줄로 배치 */
     align-items: center; /* 세로 정렬 */
-    gap: 10px; /* 로고와 텍스트 사이 간격 */
+    gap: 4px; /* 로고와 사이트 이름 사이 간격 */
+    text-align: center;
 }
 
 /* Instagram 아이콘 컨테이너 */
 .icon-container {
-    position: absolute;
+    position: absolute; /* 헤더 내에서 절대 위치 */
     right: 20px; /* 헤더 오른쪽 끝에 배치 */
     top: 50%;
     transform: translateY(-50%); /* 세로 가운데 정렬 */
