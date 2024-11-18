@@ -21,6 +21,14 @@ def encrypt_data(data):
 def decrypt_data(token):
     return cipher_suite.decrypt(token.encode()).decode()
 
+@app.after_request
+def add_header(response):
+    # 정적 파일 캐싱 방지
+    response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
+    response.headers["Pragma"] = "no-cache"
+    response.headers["Expires"] = "0"
+    return response
+
 # 이메일 전송 함수
 def send_email(subject, message):
     sender_email = "hishphi0917@gmail.com"  # 발신 이메일
