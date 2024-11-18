@@ -2,9 +2,13 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>오류 발생</title>
+    <title>Withinstar</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="icon" href="{{ url_for('static', filename='images/logo1.png') }}" type="image/png">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4209969470096098"
+     crossorigin="anonymous"></script>
     <link rel="stylesheet" href="/static/css/style.css?v=2">
 </head>
 <body>
@@ -15,7 +19,8 @@
             <span class="site-name">Withinstar.com</span>
         </div>
     </header>
-
+    
+    <!-- 전체 레이아웃 -->
     <div class="page-container">
         <!-- 좌측 광고 -->
         <div class="ad-section ad-left">
@@ -28,43 +33,45 @@
                     data-ad-slot="1234567890"
                     data-ad-format="auto"
                     data-full-width-responsive="true"></ins>
-                <script>+
+                <script>
                     (adsbygoogle = window.adsbygoogle || []).push({});
                 </script>
             </div>
         </div>
-
+        
         <!-- 메인 콘텐츠 -->
         <div class="main-content">
-            <div class="error-container">
-                <div class="error-box">
-                    <h1 class="error-title" style="color: #d9534f;">오류 발생! 매칭이 실패했습니다.</h1>
-                    <p class="error-message" style="color: #d9534f;">한 명만 지목 가능합니다. 추가 지목을 원하시면 결제를 진행해주세요.</p>
-                    <p class="error-info" style="color: #333;">
-                        ❤️ "추가 지목을 원하시나요?"<br>
-                        이후 추가로 관심을 표현하실 경우, <strong style="color: #d9534f;">1회당 2,500원</strong>의 요금이 부과됩니다.<br>
-                        비밀스럽게 마음을 전하는 <strong>Withinstar</strong>와 함께하세요!
-                    </p>
-                    <button class="error-button" id="openPopup" style="background-color: #d9534f;">마음 전달하기</button>
-                    <hr class="divider" style="border: 1px solid #f5c6cb; margin: 10px 0;">
-                    <p style="color: #555; ">
-                        혹은, 기존의 등록을 삭제하고 새로운 사람을 선택할 수 있습니다.
-                    </p>
-                    <input type="hidden" id="encryptedID" value="{{ encrypted_id }}">
-                    <button id="changeTargetButton" style="background-color: #5bc0de;">등록한 상대 바꾸기</button>
-                    <hr class="divider" style="border: 1px solid #f5c6cb; margin: 10px 0;">
-                    <h2 class="features-title" style="color: #333;">서비스 특징</h2>
-                    <ul class="features-list" style="list-style: none; padding: 0; color: #555; font-size: 0.8rem; line-height: 1.8; margin-bottom: 20px;">
-                        <li>🔒 암호화 시스템으로 정보가 절대 공개되지 않습니다.</li>
-                        <li>📩 상대방과 매칭 성공 시 Instagram DM으로 바로 알림!</li>
-                        <li>💌 마음을 전하는 간단하고 직관적인 서비스를 경험하세요.</li>
-                    </ul>
-                    <div style="text-align: center;">
-                        <a href="/" class="home-link" style="color: #d9534f; text-decoration: none; font-size: 0.8rem; padding-top: 20px; display: inline-block;">
-                            홈으로 돌아가기
-                        </a>
-                    </div>
-                </div>
+            <!-- 후킹 멘트 -->
+            <div class="hook-section">
+                <h1>“팔로우는 했는데, DM은 어떻게 보낼지 망설이셨나요?”</h1>
+                <p>
+                    혹시나 내가 관심 있다는 사실이 주변에 알려질까 두렵진 않으셨나요?<br>
+                    과에서 소문이라도 날까 걱정되셨다면, 이제는 <strong>Withinstar</strong>를 이용해 보세요!<br>
+                    관심을 표현하고 싶지만 선뜻 용기 내기 어려운 그 순간, 저희가 도와드립니다.
+                </p>
+            </div>
+            <!-- 서비스 과정 및 입력 폼 -->
+            <div class="intro-section">
+                <h2>서비스 이용 방법</h2>
+                <ol>
+                    <li>나의 Instagram ID와 관심 있는 상대방의 ID를 입력합니다.</li>
+                    <li>입력한 정보는 안전하게 암호화되어 서버에 저장됩니다.</li>
+                    <li>상대방도 동일한 방식으로 관심을 표현할 경우에만 매칭이 성사됩니다.</li>
+                    <li>매칭이 성공하면 Instagram DM을 통해 서로에게 알림이 발송됩니다.</li>
+                </ol>
+            </div>
+            <div class="container">
+                <h2>Instagram ID 등록</h2>
+                <form id="instagramForm">
+                    <label for="userInstagramID">나의 Instagram ID:</label>
+                    <input type="text" id="userInstagramID" name="userInstagramID" required>
+
+                    <label for="targetInstagramID">상대방 Instagram ID:</label>
+                    <input type="text" id="targetInstagramID" name="targetInstagramID" required>
+
+                    <button type="submit">등록하기</button>
+                </form>
+                <p id="message"></p>
             </div>
         </div>
 
@@ -85,21 +92,6 @@
             </div>
         </div>
     </div>
-
-    <!-- 팝업 레이아웃 -->
-    <div id="popup" class="popup" style="display: none;">
-        <div class="popup-content">
-            <h2>기능 준비 중</h2>
-            <p>
-                "마음 전달하기" 기능은 현재 구현 중입니다.<br>
-                하지만 무료 매칭은 정상적으로 작동합니다.<br>
-                조금만 기다려 주세요! 더 나은 서비스를 제공하겠습니다. 😊
-            </p>
-            <button id="closePopup" class="popup-button">닫기</button>
-        </div>
-    </div>    
-
-    <!-- 푸터 -->
     <footer class="footer">
         <div class="footer-content">
             <p>© 2024 썸데이(Withinstar). All rights reserved.</p>
@@ -109,56 +101,35 @@
             <p>본 웹사이트의 모든 콘텐츠는 저작권법에 의해 보호되며, 무단 복제 및 배포를 금합니다.</p>
         </div>
     </footer>
-
     <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            const openPopupButton = document.getElementById("openPopup");
-            const popup = document.getElementById("popup");
-            const closePopupButton = document.getElementById("closePopup");
-            const changeTargetButton = document.getElementById("changeTargetButton");
-        
-            // 팝업 열기
-            if (openPopupButton) {
-                openPopupButton.addEventListener("click", function () {
-                    popup.style.display = "flex"; // 팝업 표시
-                });
+        document.getElementById('instagramForm').addEventListener('submit', async function (event) {
+        event.preventDefault();
+    
+        const userInstagramID = document.getElementById('userInstagramID').value;
+        const targetInstagramID = document.getElementById('targetInstagramID').value;
+    
+        try {
+            const response = await fetch('/save_instagram_id', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    userInstagramID: userInstagramID,
+                    targetInstagramID: targetInstagramID
+                })
+            });
+    
+            const result = await response.json();
+    
+            if (result.redirect) {
+                window.location.href = result.redirect;
             }
-        
-            // 팝업 닫기
-            if (closePopupButton) {
-                closePopupButton.addEventListener("click", function () {
-                    popup.style.display = "none"; // 팝업 숨김
-                });
-            }
-
-            // 기존 대상 변경 요청
-            if (changeTargetButton) {
-                changeTargetButton.addEventListener("click", async function () {
-                    const encryptedID = document.getElementById("encryptedID").value;
-
-                    try {
-                        const response = await fetch('/delete_target', {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json',
-                            },
-                            body: JSON.stringify({ encryptedID }),
-                        });
-
-                        const result = await response.json();
-
-                        if (result.message) {
-                            alert(result.message);
-                            window.location.href = '/';
-                        } else {
-                            alert(result.error);
-                        }
-                    } catch (error) {
-                        alert('삭제 요청 중 오류가 발생했습니다. 다시 시도해주세요.');
-                    }
-                });
-            }
-        });
-    </script>        
+        } catch (error) {
+            alert('오류가 발생했습니다. 다시 시도해주세요.');
+        }
+    });
+    </script>
 </body>
+
 </html>
