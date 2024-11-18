@@ -70,31 +70,66 @@ h1, p {
 .header {
     width: 100%;
     background-color: #ffffff; /* 흰색 배경 */
-    padding: 10px; /* 패딩 최적화 */
+    padding: 10px 20px; /* 패딩 추가 */
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); /* 아래 그림자 */
-    display: flex;
+    display: flex; /* 플렉스 레이아웃 */
     justify-content: center; /* 가운데 정렬 */
+    align-items: center; /* 세로 정렬 */
     position: sticky;
     top: 0; /* 스크롤 시 고정 */
     z-index: 10; /* 우선순위 설정 */
     box-sizing: border-box; /* 패딩 포함 */
 }
 
+/* 로고 컨테이너 */
 .logo-container {
-    display: flex;
-    align-items: center;
+    display: flex; /* 플렉스 레이아웃 */
+    align-items: center; /* 세로 정렬 */
+    gap: 10px; /* 로고와 텍스트 사이 간격 */
 }
 
+/* Instagram 아이콘 컨테이너 */
+.icon-container {
+    position: absolute;
+    right: 20px; /* 헤더 오른쪽 끝에 배치 */
+    top: 50%;
+    transform: translateY(-50%); /* 세로 가운데 정렬 */
+}
+
+/* 로고 */
 .logo {
     height: 36px; /* 로고 크기 */
-    margin-right: 10px; /* 로고와 텍스트 간 간격 */
+    cursor: pointer;
 }
 
+/* 사이트 이름 */
 .site-name {
-    font-size: 1.2em; /* 사이트 이름 크기 */
-    font-weight: bold;
+    font-size: 1.2em; /* 텍스트 크기 */
+    font-weight: bold; /* 텍스트 굵게 */
     color: #333333; /* 진한 회색 */
     text-transform: uppercase; /* 대문자 표시 */
+    cursor: pointer;
+}
+
+/* 로고 및 이름 링크 스타일 */
+.logo-link, .site-name-link {
+    text-decoration: none; /* 밑줄 제거 */
+    color: inherit; /* 텍스트 색상 유지 */
+}
+
+/* Instagram 아이콘 */
+.icon {
+    height: 36px; /* 로고 크기와 동일 */
+    cursor: pointer;
+    transition: transform 0.3s ease; /* 클릭 시 애니메이션 */
+}
+
+.icon:hover {
+    transform: scale(1.1); /* 마우스 오버 시 크기 살짝 확대 */
+}
+
+.site-name-link:hover {
+    text-decoration: underline; /* 마우스 오버 시 밑줄 표시 */
 }
 
 /* 후킹 멘트 섹션 */
