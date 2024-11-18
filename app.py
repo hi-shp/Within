@@ -48,8 +48,11 @@ def save_instagram_id():
 # 인스타그램 ID 삭제 API
 @app.route('/delete_target', methods=['DELETE'])
 def delete_target():
-    user_instagram_id = request.json.get('userInstagramID')
+    # 클라이언트에서 전달된 데이터 가져오기
+    data = request.json
+    user_instagram_id = data.get('userInstagramID')
 
+    # 사용자 ID가 없는 경우 처리
     if not user_instagram_id:
         return jsonify({'error': 'User ID is required'}), 400
 
@@ -58,7 +61,7 @@ def delete_target():
         del temp_storage[user_instagram_id]
         return jsonify({'message': 'Target deleted successfully'}), 200
     else:
-        return jsonify({'error': 'No target found to delete'}), 404
+        return jsonify({'error': f'No target found to delete for {user_instagram_id}'}), 404
 
 if __name__ == '__main__':
     app.run(debug=True)
