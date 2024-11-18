@@ -68,32 +68,3 @@ button:hover {
     margin: 20px;
     text-align: center;
 }
-
-/* 데스크탑 - 광고를 좌우에 배치 */
-@media (min-width: 768px) {
-    .ad-left {
-        float: left;
-        width: 200px;
-    }
-
-    .ad-right {
-        float: right;
-        width: 200px;
-    }
-
-    .container {
-        margin: 0 220px; /* 광고 위치 고려하여 네모 박스 가운데 정렬 */
-    }
-}
-
-/* 모바일 - 광고를 위아래로 배치 */
-@media (max-width: 767px) {
-    .ad-left, .ad-right {
-        width: 100%;
-        margin: 10px 0;
-    }
-
-    .container {
-        margin: 0;
-    }
-}
