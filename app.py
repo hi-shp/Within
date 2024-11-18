@@ -8,6 +8,7 @@ app = Flask(__name__)
 # 환경 변수에서 MongoDB URI 및 암호화 키 가져오기
 app.config["MONGO_URI"] = os.getenv('MONGO_URI')
 mongo = PyMongo(app)
+mongo.init_app(app)
 
 # 암호화/복호화 키 설정
 SECRET_KEY = os.getenv('SECRET_KEY', Fernet.generate_key().decode())
