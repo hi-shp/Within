@@ -118,56 +118,98 @@
             const popup = document.getElementById("popup");
             const closePopupButton = document.getElementById("closePopup");
             const changeTargetButton = document.getElementById("changeTargetButton");
-        
+    
             // 팝업 열기
             if (openPopupButton) {
                 openPopupButton.addEventListener("click", function () {
                     popup.style.display = "flex"; // 팝업 표시
                 });
             }
-        
+    
             // 팝업 닫기
             if (closePopupButton) {
                 closePopupButton.addEventListener("click", function () {
                     popup.style.display = "none"; // 팝업 숨김
                 });
             }
+    
+            // 등록한 상대 삭제 요청 처리
+            if (changeTargetButton) {
+                changeTargetButton.addEventListener("click", async function (event) {
+                    event.preventDefault(); // 기본 링크 동작 방지
+    
+                    const confirmation = confirm("등록한 상대를 삭제하시겠습니까?");
+                    if (!confirmation) {
+                        return; // 사용자가 취소하면 요청하지 않음
+                    }
+    
+                    try {
+                        const response = await fetch('/delete_target', {
+                            method: 'DELETE',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ userInstagramID: 'example_user' }) // 동적으로 사용자 ID 변경 필요
+                        });
+    
+                        const result = await response.json();
+    
+                        if (response.ok) {
+                            alert(result.message); // 성공 메시지
+                            window.location.href = '/'; // 홈으로 리다이렉트
+                        } else {
+                            alert('Error: ' + result.error); // 오류 메시지
+                        }
+                    } catch (error) {
+                        console.error('Error:', error);
+                        alert('요청 처리 중 오류가 발생했습니다.');
+                    }
+                });
+            }
         });
+    
         // 인스타그램 ID 저장 요청
-fetch('/save_instagram_id', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-        userInstagramID: 'example_user',
-        targetInstagramID: 'example_target'
-    })
-})
-.then(response => response.json())
-.then(data => {
-    if (data.redirect) {
-        window.location.href = data.redirect;
-    } else {
-        alert('Error: ' + data.error);
-    }
-})
-.catch(error => console.error('Error:', error));
-
-// 인스타그램 ID 삭제 요청
-fetch('/delete_target', {
-    method: 'DELETE',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ userInstagramID: 'example_user' })
-})
-.then(response => response.json())
-.then(data => {
-    if (data.message) {
-        alert(data.message);
-    } else {
-        alert('Error: ' + data.error);
-    }
-})
-.catch(error => console.error('Error:', error));
-
-        </script>        
+        async function saveInstagramID(userInstagramID, targetInstagramID) {
+            try {
+                const response = await fetch('/save_instagram_id', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ userInstagramID, targetInstagramID })
+                });
+    
+                const result = await response.json();
+    
+                if (response.ok) {
+                    window.location.href = result.redirect; // 성공 시 리다이렉트
+                } else {
+                    alert('Error: ' + result.error); // 오류 메시지
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('요청 처리 중 오류가 발생했습니다.');
+            }
+        }
+    
+        // 인스타그램 ID 삭제 요청
+        async function deleteInstagramID(userInstagramID) {
+            try {
+                const response = await fetch('/delete_target', {
+                    method: 'DELETE',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ userInstagramID })
+                });
+    
+                const result = await response.json();
+    
+                if (response.ok) {
+                    alert(result.message); // 성공 메시지
+                } else {
+                    alert('Error: ' + result.error); // 오류 메시지
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('요청 처리 중 오류가 발생했습니다.');
+            }
+        }
+    </script>
+     
 </body>
 </html>
