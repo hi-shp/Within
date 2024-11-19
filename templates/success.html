@@ -1,144 +1,69 @@
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>성공</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}?v=2">
-</head>
-<body>
-    <!-- 헤더 -->
-    <header class="header">
-        <!-- 가운데 로고와 사이트 이름 -->
-        <div class="site-name-container">
-            <a href="/" class="logo-link">
-                <img src="{{ url_for('static', filename='images/logo1.png') }}" alt="Withinstar Logo" class="logo">
-            </a>
-            <a href="/" class="site-name-link">
-                <span class="site-name">Withinstar.com</span>
-            </a>
-        </div>
-        
-        <!-- 오른쪽 Instagram 아이콘 -->
-        <div class="icon-container">
-            <a href="https://www.instagram.com/withinstar_official" target="_blank">
-                <img src="{{ url_for('static', filename='images/instagram.png') }}" alt="Instagram Icon" class="icon">
-            </a>
-        </div>
-    </header>
-    
-    
+{% extends 'base.html' %}
 
-    <div class="page-container">
-        <!-- 좌측 광고 -->
-        <div class="ad-section ad-left">
-            <div class="adsense">
-                <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4209969470096098"
-                    crossorigin="anonymous"></script>
-                <ins class="adsbygoogle"
-                    style="display:block"
-                    data-ad-client="ca-pub-4209969470096098"
-                    data-ad-slot="1234567890"
-                    data-ad-format="auto"
-                    data-full-width-responsive="true"></ins>
-                <script>
-                    (adsbygoogle = window.adsbygoogle || []).push({});
-                </script>
-            </div>
-        </div>
+{% block title %}
+매칭 요청 완료 - Withinstar
+{% endblock %}
 
-        <!-- 메인 콘텐츠 -->
-        <div class="main-content">
-            <div class="success-container">
-                <div class="success-box">
-                    <h1 class="success-title" style="color: #ff6384;">저장 성공! 매칭이 되면 알려드릴게요!</h1>
-                    <p class="success-heart">❤️ "추가 지목을 원하시나요?"</p>
-                    <p class="success-info">
-                        이후 추가로 관심을 표현하실 경우, <strong>1회당 2,500원</strong>의 요금이 부과됩니다.<br>
-                        비밀스럽게 마음을 전하는 <strong>Withinstar</strong>와 함께하세요!
-                    </p>
-                    <button id="openPopup" class="success-button">마음 전달하기</button>
-                    <hr class="divider">
-                    <h2 class="features-title">서비스 특징</h2>
-                    <ul class="features-list" style="list-style: none; padding: 0; color: #555; font-size: 0.8rem; line-height: 1.8; margin-bottom: 20px;">
-                        <li>🔒 암호화 시스템으로 정보가 절대 공개되지 않습니다.</li>
-                        <li>📩 상대방과 매칭 성공 시 Instagram DM으로 바로 알림!</li>
-                        <li>💌 마음을 전하는 간단하고 직관적인 서비스를 경험하세요.</li>
-                    </ul>
-                    <div style="text-align: center;">
-                        <a href="/" class="home-link" style="color: #d9534f; text-decoration: none; font-size: 0.8rem; padding-top: 20px; display: inline-block;">
-                            홈으로 돌아가기
-                        </a>
-                    </div>
-                    
-                </div>
-            </div>
-        </div>
-
-        <!-- 우측 광고 -->
-        <div class="ad-section ad-right">
-            <div class="adsense">
-                <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4209969470096098"
-                    crossorigin="anonymous"></script>
-                <ins class="adsbygoogle"
-                    style="display:block"
-                    data-ad-client="ca-pub-4209969470096098"
-                    data-ad-slot="1234567890"
-                    data-ad-format="auto"
-                    data-full-width-responsive="true"></ins>
-                <script>
-                    (adsbygoogle = window.adsbygoogle || []).push({});
-                </script>
-            </div>
+{% block content %}
+<div class="success-container">
+    <div class="success-box">
+        <h1 class="success-title" style="color: #ff6384;">저장 성공! 매칭이 되면 알려드릴게요!</h1>
+        <p class="success-heart">❤️ "추가 지목을 원하시나요?"</p>
+        <p class="success-info">
+            이후 추가로 관심을 표현하실 경우, <strong>1회당 2,500원</strong>의 요금이 부과됩니다.<br>
+            비밀스럽게 마음을 전하는 <strong>Withinstar</strong>와 함께하세요!
+        </p>
+        <button id="openPopup" class="success-button" onclick="gtag('event', 'pay_2500_ofsuccess');">마음 전달하기</button>
+        <hr class="divider">
+        <h2 class="features-title">서비스 특징</h2>
+        <ul class="features-list" style="list-style: none; padding: 0; color: #555; font-size: 0.8rem; line-height: 1.8; margin-bottom: 20px;">
+            <li>🔒 암호화 시스템으로 정보가 절대 공개되지 않습니다.</li>
+            <li>📩 상대방과 매칭 성공 시 Instagram DM으로 바로 알림!</li>
+            <li>💌 마음을 전하는 간단하고 직관적인 서비스를 경험하세요.</li>
+        </ul>
+        <div style="text-align: center;">
+            <a href="/" class="home-link" style="color: #d9534f; text-decoration: none; font-size: 0.8rem; padding-top: 20px; display: inline-block;" onclick="gtag('event', 'home_success');">
+                홈으로 돌아가기
+            </a>            
         </div>
     </div>
+</div>
 
-    <!-- 팝업 레이아웃 -->
-    <div id="popup" class="popup" style="display: none;">
-        <div class="popup-content">
-            <h2>기능 준비 중</h2>
-            <p>
-                "마음 전달하기" 기능은 현재 구현 중입니다.<br>
-                하지만 무료 매칭은 정상적으로 작동합니다.<br>
-                조금만 기다려 주세요! 더 나은 서비스를 제공하겠습니다. 😊
-            </p>
-            <button id="closePopup" class="popup-button">닫기</button>
-        </div>
+<!-- 팝업 레이아웃 -->
+<div id="popup" class="popup" style="display: none;">
+    <div class="popup-content">
+        <h2>기능 준비 중</h2>
+        <p>
+            "마음 전달하기" 기능은 현재 구현 중입니다.<br>
+            하지만 무료 매칭은 정상적으로 작동합니다.<br>
+            조금만 기다려 주세요! 더 나은 서비스를 제공하겠습니다. 😊
+        </p>
+        <button id="closePopup" class="popup-button">닫기</button>
     </div>
-    
-    <!-- 푸터 -->
-    <footer class="footer">
-        <div class="footer-content">
-            <p>© 2024 썸데이(Withinstar). All rights reserved.</p>
-            <p>사업자 등록번호: 843-18-02055 | 대표: 박순홍</p>
-            <p>이메일: hishp@pusan.ac.kr | 전화: 010-5278-4017</p>
-            <p>주소: 부산광역시 금정구 부산대학로63번길 (부산대학교 11공학관)</p>
-            <p>본 웹사이트의 모든 콘텐츠는 저작권법에 의해 보호되며, 무단 복제 및 배포를 금합니다.</p>
-        </div>
-    </footer>
+</div>
+{% endblock %}
 
-    <script>
+{% block scripts %}
+<script>
     document.addEventListener("DOMContentLoaded", function () {
-    const openPopupButton = document.getElementById("openPopup");
-    const popup = document.getElementById("popup");
-    const closePopupButton = document.getElementById("closePopup");
+        const openPopupButton = document.getElementById("openPopup");
+        const popup = document.getElementById("popup");
+        const closePopupButton = document.getElementById("closePopup");
 
-    // 팝업 열기
-    if (openPopupButton) {
-        openPopupButton.addEventListener("click", function () {
-            popup.style.display = "flex"; // 팝업 표시
-        });
-    }
+        // 팝업 열기
+        if (openPopupButton) {
+            openPopupButton.addEventListener("click", function () {
+                popup.style.display = "flex"; // 팝업 표시
+            });
+        }
 
-    // 팝업 닫기
-    if (closePopupButton) {
-        closePopupButton.addEventListener("click", function () {
-            popup.style.display = "none"; // 팝업 숨김
-        });
-    }
-    // 페이지 로드 시 팝업을 강제로 열지 않음
-});
-
-    </script>
-</body>
-</html>
+        // 팝업 닫기
+        if (closePopupButton) {
+            closePopupButton.addEventListener("click", function () {
+                popup.style.display = "none"; // 팝업 숨김
+            });
+        }
+        // 페이지 로드 시 팝업을 강제로 열지 않음
+    });
+</script>
+{% endblock %}
