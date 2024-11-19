@@ -1,4 +1,4 @@
-# Withinstar
+# Withinstar.com
 
 ## 소개
 [Withinstar.com](www.withinstar.com)은 사용자들이 **Instagram**을 통해 비밀스럽게 관심을 표현하고 매칭을 이루도록 돕는 웹 애플리케이션입니다.
