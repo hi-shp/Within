@@ -74,6 +74,7 @@ Withinstar/
 │   │   └── style.css
 │   ├── images/
 │   │   └── logo1.png
+│   │   └── instagram.png
 │
 ├── app.py                 # Flask 메인 애플리케이션
 ├── requirements.txt       # Python 의존성 패키지
