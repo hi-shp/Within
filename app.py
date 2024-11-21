@@ -105,22 +105,27 @@ def save_instagram_id():
 def delete_target():
     data = request.json
     encrypted_id = data.get('encryptedID')
+    user_language = data.get('language', 'kor')  # 기본값은 한국어
 
     if not encrypted_id:
-        return jsonify({"error": "요청이 잘못되었습니다."}), 400
+        error_message = "요청이 잘못되었습니다." if user_language == 'kor' else "Invalid request."
+        return jsonify({"error": error_message}), 400
 
     try:
         user_instagram_id = decrypt_data(encrypted_id)
     except Exception:
-        return jsonify({"error": "유효하지 않은 토큰입니다."}), 400
+        error_message = "유효하지 않은 토큰입니다." if user_language == 'kor' else "Invalid token."
+        return jsonify({"error": error_message}), 400
 
     # MongoDB에서 데이터 삭제
     result = mongo.db.instagram_ids.delete_one({'user_instagram_id': user_instagram_id})
 
     if result.deleted_count == 0:
-        return jsonify({"error": "일치하는 데이터를 찾을 수 없습니다."}), 404
+        error_message = "일치하는 데이터를 찾을 수 없습니다." if user_language == 'kor' else "No matching data found."
+        return jsonify({"error": error_message}), 404
 
-    return jsonify({"message": "기존 지목이 성공적으로 삭제되었습니다."}), 200
+    success_message = "기존 지목이 성공적으로 삭제되었습니다." if user_language == 'kor' else "Target successfully deleted."
+    return jsonify({"message": success_message}), 200
 
 @app.route('/ads.txt')
 def ads_txt():

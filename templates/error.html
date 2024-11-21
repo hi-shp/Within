@@ -131,7 +131,7 @@
             // 홈으로 이동
             setTimeout(() => {
                 window.location.href = homeLink.getAttribute('href');
-            }, 500); // 0.5초 지연
+            }, 1);
         });
     }
 
@@ -143,6 +143,7 @@
             loadingSpinner.style.display = "flex"; // 로딩 GIF 표시
 
             const encryptedID = document.getElementById("encryptedID").value;
+            const language = localStorage.getItem('language') || 'kor'; // 언어 설정 가져오기
 
             try {
                 const response = await fetch('/delete_target', {
@@ -150,7 +151,7 @@
                     headers: {
                         'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify({ encryptedID }),
+                    body: JSON.stringify({ encryptedID, language }),
                 });
 
                 const result = await response.json();
@@ -162,7 +163,7 @@
                     alert(result.error);
                 }
             } catch (error) {
-                alert('삭제 요청 중 오류가 발생했습니다. 다시 시도해주세요.');
+                alert(language === 'kor' ? '삭제 요청 중 오류가 발생했습니다. 다시 시도해주세요.' : 'An error occurred during the delete request. Please try again.');
             } finally {
                 changeTargetButton.disabled = false; // 버튼 활성화
                 loadingSpinner.style.display = "none"; // 로딩 GIF 숨김
@@ -172,7 +173,7 @@
         changeTargetButton.addEventListener("click", handleChangeTarget);
     }
 });
-
 </script>
+
 {% endblock %}
 {% endblock %}
