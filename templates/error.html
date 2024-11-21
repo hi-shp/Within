@@ -122,7 +122,6 @@
             changeTargetButton.disabled = true; // 버튼 비활성화
 
             const encryptedID = document.getElementById("encryptedID").value;
-            console.log("삭제 요청 전송 시작"); // 디버깅 로그
 
             try {
                 const response = await fetch('/delete_target', {
@@ -134,7 +133,6 @@
                 });
 
                 const result = await response.json();
-                console.log("응답 수신:", result); // 디버깅 로그
 
                 if (result.message) {
                     alert(result.message);
@@ -143,7 +141,6 @@
                     alert(result.error);
                 }
             } catch (error) {
-                console.error("오류 발생:", error); // 디버깅 로그
                 alert('삭제 요청 중 오류가 발생했습니다. 다시 시도해주세요.');
             } finally {
                 changeTargetButton.disabled = false; // 버튼 활성화
