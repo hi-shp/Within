@@ -84,7 +84,7 @@ h1, p {
 /* 언어 전환 버튼 컨테이너 */
 .lang-toggle-button {
     position: absolute; /* 헤더 내에서 절대 위치 */
-    left: 20px; /* 헤더 왼쪽 끝에 배치 */
+    left: 10px; /* 헤더 왼쪽 끝에 배치 */
     top: 50%; /* 세로 가운데 정렬 */
     transform: translateY(-50%); /* 세로 가운데 정렬 유지 */
     width: 60px; /* 버튼 크기 */

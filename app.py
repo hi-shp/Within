@@ -111,19 +111,27 @@ def save_instagram_id():
         # 이메일 전송
         email_subject = "매칭 성공 알림"
         email_message = f"""
-        매칭 성공!
-        @{matched_user}와 @{matched_target}가 매칭되었습니다.
-
-        안녕하세요, Withinstar입니다! 🎉
-        두 분의 비밀스러운 마음이 서로 통했습니다.
-        @{matched_user}님과 @{matched_target}님, 그동안 전하지 못했던 감정을 안전하게 연결해 드릴 수 있어 저희도 정말 기쁩니다. 😊
-        지금부터 두 분만의 특별한 대화를 시작해 보세요. 서로의 이야기를 나누며 소중한 시간을 만들어가시길 바랍니다.
-        Withinstar가 항상 응원하겠습니다! 💌
+        <html>
+            <body>
+                <p><strong>매칭 성공!</strong><br>
+                @{matched_user}와 @{matched_target}가 매칭되었습니다.</p>
+                
+                안녕하세요, Withinstar입니다! 🎉<br>
+                두 분의 비밀스러운 마음이 서로 통했습니다.<br>
+                @{matched_user}님과 @{matched_target}님, 그동안 전하지 못했던 감정을 안전하게 연결해 드릴 수 있어 저희도 정말 기쁩니다. 😊
+                지금부터 두 분만의 특별한 대화를 시작해 보세요.<br>
+                서로의 이야기를 나누며 소중한 시간을 만들어가시길 바랍니다.<br>
+                Withinstar가 항상 응원하겠습니다! 💌
+            </body>
+        </html>
         """
-        send_email(subject=email_subject, message=email_message)
+        # MIMEText를 HTML로 설정
+        msg = MIMEText(email_message, "html")
+        send_email(subject=email_subject, message=msg.as_string())
 
-        success_message = "Match successful!" if language == "eng" else "매칭 성공!"
-        return jsonify({"redirect": url_for('success', message=success_message)}), 200
+    success_message = "Match successful!" if language == "eng" else "매칭 성공!"
+    return jsonify({"redirect": url_for('success', message=success_message)}), 200
+
 
     success_message = "Target selected successfully!" if language == "eng" else "상대방이 성공적으로 선택되었습니다."
     return jsonify({"redirect": url_for('success', message=success_message)}), 200
