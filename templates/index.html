@@ -45,6 +45,9 @@ Withinstar
     <h2 data-lang-eng="Register Your Instagram ID" data-lang-kor="Instagram ID 등록">
         Instagram ID 등록
     </h2>
+    <div id="loadingSpinner" style="display: none;">
+        <img src="/static/images/loading.gif" alt="Loading..." style="width: 50px; height: 50px;">
+    </div>
     <form id="instagramForm">
         <label for="userInstagramID" data-lang-eng="Your Instagram ID:" data-lang-kor="나의 Instagram ID:">
             나의 Instagram ID:
@@ -69,37 +72,45 @@ Withinstar
     let isSubmitting = false;
 
     document.getElementById('instagramForm').addEventListener('submit', async function (event) {
-        event.preventDefault();
+    event.preventDefault();
 
-        if (isSubmitting) return; // 중복 요청 방지
-        isSubmitting = true;
+    const submitButton = event.target.querySelector('button[type="submit"]');
+    const spinner = document.getElementById('loadingSpinner');
 
-        const userInstagramID = document.getElementById('userInstagramID').value;
-        const targetInstagramID = document.getElementById('targetInstagramID').value;
+    if (isSubmitting) return; // 중복 요청 방지
+    isSubmitting = true;
+    submitButton.disabled = true; // 버튼 비활성화
+    spinner.style.display = 'flex'; // 로딩 이미지 표시
 
-        try {
-            const response = await fetch('/save_instagram_id', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    userInstagramID: userInstagramID,
-                    targetInstagramID: targetInstagramID
-                })
-            });
+    const userInstagramID = document.getElementById('userInstagramID').value;
+    const targetInstagramID = document.getElementById('targetInstagramID').value;
 
-            const result = await response.json();
+    try {
+        const response = await fetch('/save_instagram_id', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                userInstagramID: userInstagramID,
+                targetInstagramID: targetInstagramID
+            })
+        });
 
-            if (result.redirect) {
-                window.location.href = result.redirect;
-            }
-        } catch (error) {
-            alert('스스로를 사랑하시는군요!');
-        } finally {
-            isSubmitting = false; // 요청 완료 후 플래그 초기화
+        const result = await response.json();
+
+        if (result.redirect) {
+            window.location.href = result.redirect;
         }
-    });
+    } catch (error) {
+        alert('스스로를 사랑하시는군요!');
+    } finally {
+        isSubmitting = false; // 요청 완료 후 플래그 초기화
+        submitButton.disabled = false; // 버튼 다시 활성화
+        spinner.style.display = 'none'; // 로딩 이미지 숨김
+    }
+});
+
 </script>
 
 

@@ -72,9 +72,38 @@
             // 알림 표시
             alert(isEnglish ? '한글로 변경됩니다.' : '영어로 변경됩니다.');
         }
+        document.addEventListener("DOMContentLoaded", function () {
+    const loadingSpinner = document.getElementById("loadingSpinner");
+    const logoLink = document.querySelector('.logo-link');
+    const siteNameLink = document.querySelector('.site-name-link');
+
+    // 공통 동작 정의
+    const handleHomeNavigation = (event) => {
+        event.preventDefault(); // 기본 동작 중지
+        loadingSpinner.style.display = 'flex'; // 로딩 스피너 표시
+
+        // 일정 시간 후 홈 화면으로 이동
+        setTimeout(() => {
+            window.location.href = event.target.closest('a').getAttribute('href');
+        }, 1);
+    };
+
+    // 이벤트 리스너 추가
+    if (logoLink) {
+        logoLink.addEventListener('click', handleHomeNavigation);
+    }
+
+    if (siteNameLink) {
+        siteNameLink.addEventListener('click', handleHomeNavigation);
+    }
+});
+
     </script>
     
-
+    <div id="loadingSpinner" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 1000;">
+        <img src="{{ url_for('static', filename='images/loading.gif') }}" alt="Loading..." style="width: 50px; height: 50px;">
+    </div>
+    
     <!-- 전체 레이아웃 -->
     <div class="page-container">
         <!-- 좌측 광고 -->

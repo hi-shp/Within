@@ -35,6 +35,9 @@
                data-lang-kor="혹은, 기존의 등록을 삭제하고 새로운 사람을 선택할 수 있습니다.">
                 혹은, 기존의 등록을 삭제하고 새로운 사람을 선택할 수 있습니다.
             </p>
+            <div id="loadingSpinner" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 1000;">
+                <img src="/static/images/delete.gif" alt="Deleting..." style="width: 50px; height: 50px;">
+            </div>            
             <input type="hidden" id="encryptedID" value="{{ encrypted_id }}">
             <button id="changeTargetButton" style="background-color: #5bc0de;" 
                 onclick="gtag('event', 'exchange_id');" 
@@ -100,6 +103,7 @@
     const popup = document.getElementById("popup");
     const closePopupButton = document.getElementById("closePopup");
     const changeTargetButton = document.getElementById("changeTargetButton");
+    const loadingSpinner = document.getElementById("loadingSpinner");
 
     // 팝업 열기
     if (openPopupButton) {
@@ -120,6 +124,7 @@
         const handleChangeTarget = async () => {
             if (changeTargetButton.disabled) return; // 이미 처리 중이라면 요청 중복 방지
             changeTargetButton.disabled = true; // 버튼 비활성화
+            loadingSpinner.style.display = "flex"; // 로딩 GIF 표시
 
             const encryptedID = document.getElementById("encryptedID").value;
 
@@ -144,11 +149,10 @@
                 alert('삭제 요청 중 오류가 발생했습니다. 다시 시도해주세요.');
             } finally {
                 changeTargetButton.disabled = false; // 버튼 활성화
+                loadingSpinner.style.display = "none"; // 로딩 GIF 숨김
             }
         };
 
-        // 기존 이벤트 핸들러 제거 후 등록
-        changeTargetButton.removeEventListener("click", handleChangeTarget);
         changeTargetButton.addEventListener("click", handleChangeTarget);
     }
 });
