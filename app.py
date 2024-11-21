@@ -114,7 +114,6 @@ def save_instagram_id():
         매칭 성공!
         @{matched_user}와 @{matched_target}가 매칭되었습니다.
 
-        
         안녕하세요, Withinstar입니다! 🎉
         두 분의 비밀스러운 마음이 서로 통했습니다.
         @{matched_user}님과 @{matched_target}님, 그동안 전하지 못했던 감정을 안전하게 연결해 드릴 수 있어 저희도 정말 기쁩니다. 😊
