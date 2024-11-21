@@ -4,6 +4,7 @@ import os
 from cryptography.fernet import Fernet
 import smtplib
 from email.mime.text import MIMEText
+from datetime import datetime, timedelta
 
 app = Flask(__name__)
 
@@ -15,11 +16,14 @@ mongo = PyMongo(app)
 SECRET_KEY = os.getenv('SECRET_KEY', Fernet.generate_key().decode())
 cipher_suite = Fernet(SECRET_KEY.encode())
 
+
 def encrypt_data(data):
     return cipher_suite.encrypt(data.encode()).decode()
 
+
 def decrypt_data(token):
     return cipher_suite.decrypt(token.encode()).decode()
+
 
 @app.after_request
 def add_header(response):
@@ -28,6 +32,7 @@ def add_header(response):
     response.headers["Pragma"] = "no-cache"
     response.headers["Expires"] = "0"
     return response
+
 
 # 이메일 전송 함수
 def send_email(subject, message):
@@ -44,20 +49,24 @@ def send_email(subject, message):
         server.login(sender_email, sender_password)
         server.sendmail(sender_email, receiver_email, msg.as_string())
 
+
 # 기본 루트
 @app.route('/')
 def index():
     return render_template('index.html')
+
 
 # 성공 메시지 페이지
 @app.route('/success/<message>')
 def success(message):
     return render_template('success.html', message=message)
 
+
 # 오류 메시지 페이지
 @app.route('/error/<error_message>/<encrypted_id>')
 def error(error_message, encrypted_id):
     return render_template('error.html', error_message=error_message, encrypted_id=encrypted_id)
+
 
 # 인스타그램 ID 저장 API
 @app.route('/save_instagram_id', methods=['POST'])
@@ -70,6 +79,56 @@ def save_instagram_id():
     if not user_instagram_id or not target_instagram_id:
         error_message = "Instagram ID is required." if language == "eng" else "Instagram ID를 입력해주세요."
         return jsonify({"redirect": url_for('error', error_message=error_message, encrypted_id="")}), 400
+
+    # 클라이언트 IP 가져오기
+    client_ip = request.remote_addr
+    ip_tracking = mongo.db.ip_tracking.find_one({'ip': client_ip})
+
+    # 동일한 IP에서 이전 요청과 동일한 역방향 지목 방지
+    reverse_match = mongo.db.instagram_ids.find_one({
+        "user_instagram_id": target_instagram_id,
+        "target_instagram_id": user_instagram_id
+    })
+
+    current_time = datetime.utcnow()
+
+    if reverse_match:
+        # IP 차단 상태 확인
+        ip_block = mongo.db.ip_tracking.find_one({'ip': client_ip})
+
+        if ip_block:
+            block_time = ip_block.get('blocked_until')
+            blocked_target = ip_block.get('blocked_user')
+
+            # 현재 IP 차단 상태인지 확인
+            if block_time and current_time < block_time:
+                # 입력한 user_id가 이전에 타겟으로 기록된 경우 금지
+                if user_instagram_id == blocked_target:
+                    alert_message = "Impersonation is bad!" if language == "eng" else "사칭은 나빠!"
+                    return jsonify({"alert": alert_message, "redirect": url_for('index')}), 429
+
+        # IP 차단 설정
+        block_until = current_time + timedelta(minutes=5)
+        mongo.db.ip_tracking.update_one(
+            {'ip': client_ip},
+            {
+                "$set": {
+                    "blocked_user": user_instagram_id,
+                    "blocked_until": block_until
+                }
+            },
+            upsert=True
+        )
+
+        alert_message = "Impersonation is bad!" if language == "eng" else "사칭은 나빠!"
+        return jsonify({"alert": alert_message, "redirect": url_for('index')}), 429
+
+    # IP 및 요청 정보 갱신
+    mongo.db.ip_tracking.update_one(
+        {'ip': client_ip},
+        {"$set": {"blocked_until": current_time + timedelta(minutes=5)}},  # blocked_until만 갱신
+        upsert=True  # IP가 존재하지 않으면 새로 추가
+    )
 
     # 스스로를 지목한 경우
     if user_instagram_id == target_instagram_id:
@@ -129,6 +188,7 @@ Withinstar가 항상 응원하겠습니다! 💌
     success_message = "Target selected successfully!" if language == "eng" else "상대방이 성공적으로 선택되었습니다."
     return jsonify({"redirect": url_for('success', message=success_message)}), 200
 
+
 # 기존 데이터 삭제 API
 @app.route('/delete_target', methods=['POST'])
 def delete_target():
@@ -156,10 +216,12 @@ def delete_target():
     success_message = "기존 지목이 성공적으로 삭제되었습니다." if user_language == 'kor' else "Target successfully deleted."
     return jsonify({"message": success_message}), 200
 
+
 @app.route('/ads.txt')
 def ads_txt():
     content = "google.com, pub-4209969470096098, DIRECT, f08c47fec0942fa0"
     return Response(content, mimetype='text/plain')
+
 
 if __name__ == '__main__':
     app.run(debug=True)
