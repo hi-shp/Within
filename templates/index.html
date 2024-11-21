@@ -74,46 +74,56 @@ Withinstar
     let isSubmitting = false;
 
     document.getElementById('instagramForm').addEventListener('submit', async function (event) {
-    event.preventDefault();
+        event.preventDefault();
 
-    const submitButton = event.target.querySelector('button[type="submit"]');
-    const spinner = document.getElementById('loadingSpinner');
+        const submitButton = event.target.querySelector('button[type="submit"]');
+        const spinner = document.getElementById('loadingSpinner');
 
-    if (isSubmitting) return; // 중복 요청 방지
-    isSubmitting = true;
-    submitButton.disabled = true; // 버튼 비활성화
-    spinner.style.display = 'flex'; // 로딩 이미지 표시
+        if (isSubmitting) return; // 중복 요청 방지
+        isSubmitting = true;
+        submitButton.disabled = true; // 버튼 비활성화
+        spinner.style.display = 'flex'; // 로딩 이미지 표시
 
-    const userInstagramID = document.getElementById('userInstagramID').value;
-    const targetInstagramID = document.getElementById('targetInstagramID').value;
+        const userInstagramIDInput = document.getElementById('userInstagramID');
+        const targetInstagramIDInput = document.getElementById('targetInstagramID');
 
-    try {
-        const response = await fetch('/save_instagram_id', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                userInstagramID: userInstagramID,
-                targetInstagramID: targetInstagramID
-            })
-        });
+        let userInstagramID = userInstagramIDInput.value.trim();
+        let targetInstagramID = targetInstagramIDInput.value.trim();
 
-        const result = await response.json();
+        // 공백 제거 후 값 다시 설정
+        userInstagramIDInput.value = userInstagramID;
+        targetInstagramIDInput.value = targetInstagramID;
 
-        if (result.redirect) {
-            window.location.href = result.redirect;
+        try {
+            const response = await fetch('/save_instagram_id', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    userInstagramID: userInstagramID,
+                    targetInstagramID: targetInstagramID
+                })
+            });
+
+            const result = await response.json();
+
+            if (result.redirect) {
+                window.location.href = result.redirect;
+            }
+        } catch (error) {
+            const language = localStorage.getItem('language') || 'kor'; // 사용자 언어 가져오기
+            const errorMessage = language === 'kor'
+                ? '스스로를 사랑하시는군요!'
+                : 'You truly love yourself!';
+            alert(errorMessage);
+        } finally {
+            isSubmitting = false; // 요청 완료 후 플래그 초기화
+            submitButton.disabled = false; // 버튼 다시 활성화
+            spinner.style.display = 'none'; // 로딩 이미지 숨김
         }
-    } catch (error) {
-        alert('스스로를 사랑하시는군요!');
-    } finally {
-        isSubmitting = false; // 요청 완료 후 플래그 초기화
-        submitButton.disabled = false; // 버튼 다시 활성화
-        spinner.style.display = 'none'; // 로딩 이미지 숨김
-    }
-});
 
+    });
 </script>
-
 
 {% endblock %}
