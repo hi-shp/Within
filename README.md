@@ -75,8 +75,12 @@ Withinstar/
 │   ├── images/
 │   │   └── logo1.png
 │   │   └── instagram.png
+│   │   └── loading.gif
+│   ├── js/
+│   │   └── language-toggle.js
 │
 ├── app.py                 # Flask 메인 애플리케이션
 ├── requirements.txt       # Python 의존성 패키지
+├── .gitignore             # 제외 목록
 ├── .env                   # 환경 변수 파일
 └── README.md              # 프로젝트 설명 파일
