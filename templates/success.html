@@ -7,22 +7,54 @@
 {% block content %}
 <div class="success-container">
     <div class="success-box">
-        <h1 class="success-title" style="color: #ff6384;">저장 성공! 매칭이 되면 알려드릴게요!</h1>
-        <p class="success-heart">❤️ "추가 지목을 원하시나요?"</p>
-        <p class="success-info">
+        <h1 class="success-title" style="color: #ff6384;" 
+            data-lang-eng="Saved successfully! We’ll let you know if a match is made!" 
+            data-lang-kor="저장 성공! 매칭이 되면 알려드릴게요!">
+            저장 성공! 매칭이 되면 알려드릴게요!
+        </h1>
+        <p class="success-heart" 
+           data-lang-eng="❤️ Would you like to express more interest?" 
+           data-lang-kor="❤️ '추가 지목을 원하시나요?'">
+            ❤️'추가 지목을 원하시나요?'
+        </p>
+        <p class="success-info" 
+           data-lang-eng="If you express additional interest, a fee of <strong>2,500 KRW</strong> per attempt will be charged.<br>Share your feelings secretly with <strong>Withinstar</strong>!"
+           data-lang-kor="이후 추가로 관심을 표현하실 경우, <strong>1회당 2,500원</strong>의 요금이 부과됩니다.<br>비밀스럽게 마음을 전하는 <strong>Withinstar</strong>와 함께하세요!">
             이후 추가로 관심을 표현하실 경우, <strong>1회당 2,500원</strong>의 요금이 부과됩니다.<br>
             비밀스럽게 마음을 전하는 <strong>Withinstar</strong>와 함께하세요!
         </p>
-        <button id="openPopup" class="success-button" onclick="gtag('event', 'pay_2500_ofsuccess');">마음 전달하기</button>
+        <button id="openPopup" class="success-button" 
+            onclick="gtag('event', 'pay_2500_ofsuccess');" 
+            data-lang-eng="Express Feelings" 
+            data-lang-kor="마음 전달하기">
+            마음 전달하기
+        </button>
         <hr class="divider">
-        <h2 class="features-title">서비스 특징</h2>
+        <h2 class="features-title" 
+            data-lang-eng="Service Features" 
+            data-lang-kor="서비스 특징">
+            서비스 특징
+        </h2>
         <ul class="features-list" style="list-style: none; padding: 0; color: #555; font-size: 0.8rem; line-height: 1.8; margin-bottom: 20px;">
-            <li>🔒 암호화 시스템으로 정보가 절대 공개되지 않습니다.</li>
-            <li>📩 상대방과 매칭 성공 시 Instagram DM으로 바로 알림!</li>
-            <li>💌 마음을 전하는 간단하고 직관적인 서비스를 경험하세요.</li>
+            <li data-lang-eng="🔒 Your information will never be disclosed thanks to our encryption system."
+                data-lang-kor="🔒 암호화 시스템으로 정보가 절대 공개되지 않습니다.">
+                🔒 암호화 시스템으로 정보가 절대 공개되지 않습니다.
+            </li>
+            <li data-lang-eng="📩 Receive an instant notification via Instagram DM when matched!"
+                data-lang-kor="📩 상대방과 매칭 성공 시 Instagram DM으로 바로 알림!">
+                📩 상대방과 매칭 성공 시 Instagram DM으로 바로 알림!
+            </li>
+            <li data-lang-eng="💌 Experience a simple and intuitive way to express your feelings."
+                data-lang-kor="💌 마음을 전하는 간단하고 직관적인 서비스를 경험하세요.">
+                💌 마음을 전하는 간단하고 직관적인 서비스를 경험하세요.
+            </li>
         </ul>
         <div style="text-align: center;">
-            <a href="/" class="home-link" style="color: #d9534f; text-decoration: none; font-size: 0.8rem; padding-top: 20px; display: inline-block;" onclick="gtag('event', 'home_success');">
+            <a href="/" class="home-link" 
+               style="color: #d9534f; text-decoration: none; font-size: 0.8rem; padding-top: 20px; display: inline-block;" 
+               onclick="gtag('event', 'home_success');"
+               data-lang-eng="Go back to Home" 
+               data-lang-kor="홈으로 돌아가기">
                 홈으로 돌아가기
             </a>            
         </div>
@@ -32,17 +64,23 @@
 <!-- 팝업 레이아웃 -->
 <div id="popup" class="popup" style="display: none;">
     <div class="popup-content">
-        <h2>기능 준비 중</h2>
-        <p>
-            "마음 전달하기" 기능은 현재 구현 중입니다.<br>
+        <h2 data-lang-eng="Feature Under Development" 
+            data-lang-kor="기능 준비 중">
+            기능 준비 중
+        </h2>
+        <p data-lang-eng="The 'Express Feelings' feature is under development.<br>But free matching works normally.<br>Please wait a little longer! We will provide better services. 😊"
+           data-lang-kor="'마음 전달하기' 기능은 현재 구현 중입니다.<br>하지만 무료 매칭은 정상적으로 작동합니다.<br>조금만 기다려 주세요! 더 나은 서비스를 제공하겠습니다. 😊">
+            '마음 전달하기' 기능은 현재 구현 중입니다.<br>
             하지만 무료 매칭은 정상적으로 작동합니다.<br>
             조금만 기다려 주세요! 더 나은 서비스를 제공하겠습니다. 😊
         </p>
-        <button id="closePopup" class="popup-button">닫기</button>
+        <button id="closePopup" class="popup-button" 
+            data-lang-eng="Close" 
+            data-lang-kor="닫기">
+            닫기
+        </button>
     </div>
 </div>
-{% endblock %}
-
 {% block scripts %}
 <script>
     document.addEventListener("DOMContentLoaded", function () {
@@ -63,7 +101,9 @@
                 popup.style.display = "none"; // 팝업 숨김
             });
         }
-        // 페이지 로드 시 팝업을 강제로 열지 않음
+
+        // 페이지 로드 시 팝업 강제 열기 방지
     });
 </script>
+{% endblock %}
 {% endblock %}

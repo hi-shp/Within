@@ -81,6 +81,31 @@ h1, p {
     box-sizing: border-box; /* 패딩 포함 */
 }
 
+/* 언어 전환 버튼 컨테이너 */
+.lang-toggle-button {
+    position: absolute; /* 헤더 내에서 절대 위치 */
+    left: 20px; /* 헤더 왼쪽 끝에 배치 */
+    top: 50%; /* 세로 가운데 정렬 */
+    transform: translateY(-50%); /* 세로 가운데 정렬 유지 */
+    width: 60px; /* 버튼 크기 */
+    height: 40px; /* 버튼 크기 */
+    background-color: #ffffff; /* 배경색 */
+    border: 1px solid #ddd; /* 테두리 */
+    border-radius: 5px; /* 둥근 모서리 */
+    font-size: 14px; /* 텍스트 크기 */
+    font-weight: bold; /* 텍스트 강조 */
+    color: #333; /* 텍스트 색상 */
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* 가벼운 그림자 */
+}
+
+.lang-toggle-button:hover {
+    background-color: #f9f9f9; /* 마우스 오버 시 배경색 */
+}
+
 /* 가운데 사이트 이름과 로고 컨테이너 */
 .site-name-container {
     display: flex; /* 로고와 사이트 이름을 한 줄로 배치 */
