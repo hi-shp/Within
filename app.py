@@ -85,20 +85,34 @@ def save_instagram_id():
     })
 
     # 역방향 매칭 확인
+    if user_instagram_id == target_instagram_id:
+        return jsonify({"redirect": url_for('error', error_message="You cannot target your own ID.", encrypted_id="")}), 400
+
     reverse_match = mongo.db.instagram_ids.find_one({
         "user_instagram_id": target_instagram_id,
         "target_instagram_id": user_instagram_id
     })
 
     if reverse_match:
+        # 매칭된 사용자 아이디들
+        matched_user = reverse_match["user_instagram_id"]
+        matched_target = reverse_match["target_instagram_id"]
+
         # 이메일 전송
-        send_email(
-            subject="매칭 성공 알림",
-            message=f"매칭 성공!\n{user_instagram_id}와 {target_instagram_id}가 매칭되었습니다."
-        )
+        email_subject = "매칭 성공 알림"
+        email_message = f"""
+        안녕하세요, Withinstar입니다! 🎉
+        두 분의 비밀스러운 마음이 서로 통했습니다.
+        @{matched_user}님과 @{matched_target}님, 그동안 전하지 못했던 감정을 안전하게 연결해 드릴 수 있어 저희도 정말 기쁩니다. 😊
+        지금부터 두 분만의 특별한 대화를 시작해 보세요. 서로의 이야기를 나누며 소중한 시간을 만들어가시길 바랍니다.
+        Withinstar가 항상 응원하겠습니다! 💌
+        """
+
+        send_email(subject=email_subject, message=email_message)
         return jsonify({"redirect": url_for('success', message="매칭 성공!")}), 200
 
     return jsonify({"redirect": url_for('success', message="Target selected successfully!")}), 200
+
 
 # 기존 데이터 삭제 API
 @app.route('/delete_target', methods=['POST'])
