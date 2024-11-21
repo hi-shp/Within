@@ -28,156 +28,173 @@
     </head>
     
     
-<body>
-    <!-- 헤더 -->
-    <header class="header">
-        <!-- 왼쪽 언어 변환 버튼 -->
-        <div class="lang-toggle-container">
-            <button id="lang-toggle-button" class="lang-toggle-button" onclick="toggleLanguage()">Eng</button>
-        </div>        
-
-        <!-- 가운데 로고와 사이트 이름 -->
-        <div class="site-name-container">
-            <a href="/" class="logo-link" onclick="gtag('event', 'home_header');">
-                <img src="{{ url_for('static', filename='images/logo1.png') }}" alt="Withinstar Logo" class="logo">
-            </a>
-            <a href="/" class="site-name-link" onclick="gtag('event', 'home_header');">
-                <span class="site-name">Withinstar.com</span>
-            </a>            
+    <body>
+        <script src="{{ url_for('static', filename='js/language-toggle.js') }}"></script>
+        
+        <!-- 헤더 -->
+        <header class="header">
+            <!-- 왼쪽 언어 변환 버튼 -->
+            <div class="lang-toggle-container">
+                <button id="lang-toggle-button" class="lang-toggle-button" data-lang-eng="Eng" data-lang-kor="Kor" onclick="toggleLanguage()">Eng</button>
+            </div>        
+    
+            <!-- 가운데 로고와 사이트 이름 -->
+            <div class="site-name-container">
+                <a href="/" class="logo-link" onclick="gtag('event', 'home_header');">
+                    <img src="{{ url_for('static', filename='images/logo1.png') }}" alt="Withinstar Logo" class="logo">
+                </a>
+                <a href="/" class="site-name-link" onclick="gtag('event', 'home_header');">
+                    <span class="site-name">Withinstar.com</span>
+                </a>            
+            </div>
+            
+            <!-- 오른쪽 Instagram 아이콘 -->
+            <div class="icon-container">
+                <a href="https://www.instagram.com/withinstar_official" target="_blank" onclick="gtag('event', 'visit_instagram');">
+                    <img src="{{ url_for('static', filename='images/instagram.png') }}" alt="Instagram Icon" class="icon">
+                </a>            
+            </div>
+        </header>
+        
+        <div id="loadingSpinner" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 1000;">
+            <img src="{{ url_for('static', filename='images/loading.gif') }}" alt="Loading..." style="width: 50px; height: 50px;">
         </div>
         
-        <!-- 오른쪽 Instagram 아이콘 -->
-        <div class="icon-container">
-            <a href="https://www.instagram.com/withinstar_official" target="_blank" onclick="gtag('event', 'visit_instagram');">
-                <img src="{{ url_for('static', filename='images/instagram.png') }}" alt="Instagram Icon" class="icon">
-            </a>            
+        <!-- 전체 레이아웃 -->
+        <div class="page-container">
+            <!-- 좌측 광고 -->
+            <div class="ad-section ad-left">
+                <div class="adsense">
+                    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4209969470096098"
+                        crossorigin="anonymous"></script>
+                    <ins class="adsbygoogle"
+                        style="display:block"
+                        data-ad-client="ca-pub-4209969470096098"
+                        data-ad-slot="1234567890"
+                        data-ad-format="auto"
+                        data-full-width-responsive="true"></ins>
+                    <script>
+                        (adsbygoogle = window.adsbygoogle || []).push({});
+                    </script>
+                </div>
+            </div>
+    
+            <!-- 메인 콘텐츠 -->
+            <div class="main-content">
+                {% block content %}
+                <!-- 페이지별 내용이 여기에 삽입됩니다 -->
+                {% endblock %}
+            </div>
+    
+            <!-- 우측 광고 -->
+            <div class="ad-section ad-right">
+                <div class="adsense">
+                    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4209969470096098"
+                        crossorigin="anonymous"></script>
+                    <ins class="adsbygoogle"
+                        style="display:block"
+                        data-ad-client="ca-pub-4209969470096098"
+                        data-ad-slot="1234567890"
+                        data-ad-format="auto"
+                        data-full-width-responsive="true"></ins>
+                    <script>
+                        (adsbygoogle = window.adsbygoogle || []).push({});
+                    </script>
+                </div>
+            </div>
         </div>
-    </header>
-
-    <script>
-        function toggleLanguage() {
-            const button = document.getElementById('lang-toggle-button');
-            const isEnglish = button.innerText === 'Kor';
     
-            // 버튼 텍스트 변경
-            button.innerText = isEnglish ? 'Eng' : 'Kor';
-    
-            // 페이지 텍스트 변경
-            const elements = document.querySelectorAll('[data-lang-eng]');
-            elements.forEach((el) => {
-                // innerHTML을 사용하여 태그가 포함된 내용을 처리
-                el.innerHTML = isEnglish ? el.getAttribute('data-lang-kor') : el.getAttribute('data-lang-eng');
+        <!-- 푸터 -->
+        <footer class="footer">
+            <div class="footer-content">
+                <p data-lang-eng="© 2024 Someday (Withinstar). All rights reserved."
+                   data-lang-kor="© 2024 썸데이(Withinstar). All rights reserved.">
+                    © 2024 썸데이(Someday). All rights reserved.
+                </p>
+                <p data-lang-eng="Business Registration Number: 843-18-02055 | Representative: Soonhong Park"
+                   data-lang-kor="사업자 등록번호: 843-18-02055 | 대표: 박순홍">
+                    사업자 등록번호: 843-18-02055 | 대표: 박순홍
+                </p>
+                <p data-lang-eng="Email: hishp@pusan.ac.kr | Phone: +82-10-5278-4017"
+                    data-lang-kor="이메일: hishp@pusan.ac.kr | 전화: 010-5278-4017">
+                    이메일: hishp@pusan.ac.kr | 전화: 010-5278-4017
+                </p>
+                <p data-lang-eng="Address: 11 Engineering Building, Pusan National University, Geumjeong-gu, Busan"
+                   data-lang-kor="주소: 부산광역시 금정구 부산대학로63번길 (부산대학교 11공학관)">
+                    주소: 부산광역시 금정구 부산대학로63번길 (부산대학교 11공학관)
+                </p>
+                <p data-lang-eng="All content on this website is protected by copyright law and unauthorized copying and distribution are prohibited."
+                   data-lang-kor="본 웹사이트의 모든 콘텐츠는 저작권법에 의해 보호되며, 무단 복제 및 배포를 금합니다.">
+                    본 웹사이트의 모든 콘텐츠는 저작권법에 의해 보호되며, 무단 복제 및 배포를 금합니다.
+                </p>
+            </div>
+        </footer>
+        
+        <script>
+            function toggleLanguage() {
+                const button = document.getElementById('lang-toggle-button');
+                const isEnglish = button.innerText === 'Eng';
+        
+                // 버튼 텍스트 변경
+                button.innerText = isEnglish ? 'Eng' : 'Kor';
+        
+                // 페이지 텍스트 변경
+                const elements = document.querySelectorAll('[data-lang-eng]');
+                elements.forEach((el) => {
+                    // innerHTML을 사용하여 태그가 포함된 내용을 처리
+                    el.innerHTML = isEnglish ? el.getAttribute('data-lang-kor') : el.getAttribute('data-lang-eng');
+                });
+        
+                // 로컬 스토리지에 언어 저장
+                const newLang = isEnglish ? 'kor' : 'eng';
+                localStorage.setItem('language', newLang);
+        
+                // 알림 표시
+                alert(isEnglish ? '한글로 변경됩니다.' : 'It will be switched to English.');
+            }
+        
+            document.addEventListener("DOMContentLoaded", function () {
+                // 로컬 스토리지에서 저장된 언어 가져오기
+                const savedLang = localStorage.getItem('language') || 'kor';
+                const button = document.getElementById('lang-toggle-button');
+        
+                // 언어에 따라 버튼 텍스트와 페이지 텍스트 변경
+                button.innerText = savedLang === 'kor' ? 'Eng' : 'Kor';
+                const elements = document.querySelectorAll('[data-lang-eng]');
+                elements.forEach((el) => {
+                    el.innerHTML = savedLang === 'kor' ? el.getAttribute('data-lang-kor') : el.getAttribute('data-lang-eng');
+                });
+        
+                const loadingSpinner = document.getElementById("loadingSpinner");
+                const logoLink = document.querySelector('.logo-link');
+                const siteNameLink = document.querySelector('.site-name-link');
+        
+                // 공통 동작 정의
+                const handleHomeNavigation = (event) => {
+                    event.preventDefault(); // 기본 동작 중지
+                    loadingSpinner.style.display = 'flex'; // 로딩 스피너 표시
+        
+                    // 일정 시간 후 홈 화면으로 이동
+                    setTimeout(() => {
+                        window.location.href = event.target.closest('a').getAttribute('href');
+                    }, 1);
+                };
+        
+                // 이벤트 리스너 추가
+                if (logoLink) {
+                    logoLink.addEventListener('click', handleHomeNavigation);
+                }
+        
+                if (siteNameLink) {
+                    siteNameLink.addEventListener('click', handleHomeNavigation);
+                }
             });
+        </script>
+        
+        <!-- 추가 스크립트 -->
+        {% block scripts %}
+        <!-- 페이지별 스크립트가 여기에 삽입됩니다 -->
+        {% endblock %}
+    </body>
     
-            // 알림 표시
-            alert(isEnglish ? '한글로 변경됩니다.' : '영어로 변경됩니다.');
-        }
-        document.addEventListener("DOMContentLoaded", function () {
-    const loadingSpinner = document.getElementById("loadingSpinner");
-    const logoLink = document.querySelector('.logo-link');
-    const siteNameLink = document.querySelector('.site-name-link');
-
-    // 공통 동작 정의
-    const handleHomeNavigation = (event) => {
-        event.preventDefault(); // 기본 동작 중지
-        loadingSpinner.style.display = 'flex'; // 로딩 스피너 표시
-
-        // 일정 시간 후 홈 화면으로 이동
-        setTimeout(() => {
-            window.location.href = event.target.closest('a').getAttribute('href');
-        }, 1);
-    };
-
-    // 이벤트 리스너 추가
-    if (logoLink) {
-        logoLink.addEventListener('click', handleHomeNavigation);
-    }
-
-    if (siteNameLink) {
-        siteNameLink.addEventListener('click', handleHomeNavigation);
-    }
-});
-
-    </script>
-    
-    <div id="loadingSpinner" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 1000;">
-        <img src="{{ url_for('static', filename='images/loading.gif') }}" alt="Loading..." style="width: 50px; height: 50px;">
-    </div>
-    
-    <!-- 전체 레이아웃 -->
-    <div class="page-container">
-        <!-- 좌측 광고 -->
-        <div class="ad-section ad-left">
-            <div class="adsense">
-                <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4209969470096098"
-                    crossorigin="anonymous"></script>
-                <ins class="adsbygoogle"
-                    style="display:block"
-                    data-ad-client="ca-pub-4209969470096098"
-                    data-ad-slot="1234567890"
-                    data-ad-format="auto"
-                    data-full-width-responsive="true"></ins>
-                <script>
-                    (adsbygoogle = window.adsbygoogle || []).push({});
-                </script>
-            </div>
-        </div>
-
-        <!-- 메인 콘텐츠 -->
-        <div class="main-content">
-            {% block content %}
-            <!-- 페이지별 내용이 여기에 삽입됩니다 -->
-            {% endblock %}
-        </div>
-
-        <!-- 우측 광고 -->
-        <div class="ad-section ad-right">
-            <div class="adsense">
-                <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4209969470096098"
-                    crossorigin="anonymous"></script>
-                <ins class="adsbygoogle"
-                    style="display:block"
-                    data-ad-client="ca-pub-4209969470096098"
-                    data-ad-slot="1234567890"
-                    data-ad-format="auto"
-                    data-full-width-responsive="true"></ins>
-                <script>
-                    (adsbygoogle = window.adsbygoogle || []).push({});
-                </script>
-            </div>
-        </div>
-    </div>
-
-    <!-- 푸터 -->
-    <footer class="footer">
-        <div class="footer-content">
-            <p data-lang-eng="© 2024 Someday (Withinstar). All rights reserved."
-               data-lang-kor="© 2024 썸데이(Withinstar). All rights reserved.">
-                © 2024 썸데이(Withinstar). All rights reserved.
-            </p>
-            <p data-lang-eng="Business Registration Number: 843-18-02055 | Representative: Soonhong Park"
-               data-lang-kor="사업자 등록번호: 843-18-02055 | 대표: 박순홍">
-                사업자 등록번호: 843-18-02055 | 대표: 박순홍
-            </p>
-            <p data-lang-eng="Email: hishp@pusan.ac.kr | Phone: 010-5278-4017"
-               data-lang-kor="이메일: hishp@pusan.ac.kr | 전화: 010-5278-4017">
-                이메일: hishp@pusan.ac.kr | 전화: 010-5278-4017
-            </p>
-            <p data-lang-eng="Address: 11 Engineering Building, Pusan National University, Geumjeong-gu, Busan"
-               data-lang-kor="주소: 부산광역시 금정구 부산대학로63번길 (부산대학교 11공학관)">
-                주소: 부산광역시 금정구 부산대학로63번길 (부산대학교 11공학관)
-            </p>
-            <p data-lang-eng="All content on this website is protected by copyright law and unauthorized copying and distribution are prohibited."
-               data-lang-kor="본 웹사이트의 모든 콘텐츠는 저작권법에 의해 보호되며, 무단 복제 및 배포를 금합니다.">
-                본 웹사이트의 모든 콘텐츠는 저작권법에 의해 보호되며, 무단 복제 및 배포를 금합니다.
-            </p>
-        </div>
-    </footer>
-    
-
-    <!-- 추가 스크립트 -->
-    {% block scripts %}
-    <!-- 페이지별 스크립트가 여기에 삽입됩니다 -->
-    {% endblock %}
-</body>
 </html>

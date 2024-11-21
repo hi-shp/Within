@@ -5,6 +5,8 @@
 {% endblock %}
 
 {% block content %}
+<script src="{{ url_for('static', filename='js/language-toggle.js') }}"></script>
+
 <div class="success-container">
     <div class="success-box">
         <h1 class="success-title" style="color: #ff6384;" 
@@ -50,7 +52,9 @@
             </li>
         </ul>
         <div style="text-align: center;">
-            
+            <div id="loadingSpinner" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 1000;">
+                <img src="{{ url_for('static', filename='images/loading.gif') }}" alt="Loading..." style="width: 50px; height: 50px;">
+            </div>
             <a href="/" class="home-link" 
                style="color: #d9534f; text-decoration: none; font-size: 0.8rem; padding-top: 20px; display: inline-block;" 
                onclick="gtag('event', 'home_success');"
@@ -87,26 +91,40 @@
 {% block scripts %}
 <script>
     document.addEventListener("DOMContentLoaded", function () {
-        const openPopupButton = document.getElementById("openPopup");
-        const popup = document.getElementById("popup");
-        const closePopupButton = document.getElementById("closePopup");
+    const openPopupButton = document.getElementById("openPopup");
+    const popup = document.getElementById("popup");
+    const closePopupButton = document.getElementById("closePopup");
+    const homeLink = document.querySelector('.home-link');
+    const loadingSpinner = document.getElementById("loadingSpinner");
 
-        // 팝업 열기
-        if (openPopupButton) {
-            openPopupButton.addEventListener("click", function () {
-                popup.style.display = "flex"; // 팝업 표시
-            });
-        }
+    // 팝업 열기
+    if (openPopupButton) {
+        openPopupButton.addEventListener("click", function () {
+            popup.style.display = "flex"; // 팝업 표시
+        });
+    }
 
-        // 팝업 닫기
-        if (closePopupButton) {
-            closePopupButton.addEventListener("click", function () {
-                popup.style.display = "none"; // 팝업 숨김
-            });
-        }
+    // 팝업 닫기
+    if (closePopupButton) {
+        closePopupButton.addEventListener("click", function () {
+            popup.style.display = "none"; // 팝업 숨김
+        });
+    }
 
-        // 페이지 로드 시 팝업 강제 열기 방지
-    });
+    // 홈으로 돌아가기 버튼 클릭 시 로딩 표시
+    if (homeLink) {
+        homeLink.addEventListener('click', function (event) {
+            event.preventDefault(); // 기본 동작 중지
+            loadingSpinner.style.display = 'flex'; // 로딩 화면 표시
+
+            // 일정 시간 후 홈 화면으로 이동
+            setTimeout(() => {
+                window.location.href = homeLink.getAttribute('href');
+            }, 1);
+        });
+    }
+});
+
 </script>
 {% endblock %}
 {% endblock %}
